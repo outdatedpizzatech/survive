@@ -6,9 +6,11 @@ public class Map : MonoBehaviour {
 	public int xOrigin;
 	public int yOrigin;
 	public Matrix matrix;
+	private GameObject playerMarker;
 
 	// Use this for initialization
 	void Start () {
+		playerMarker = GameObject.Find ("PlayerMarker");
 		matrix = GetComponent<Matrix> ();
 		xOrigin = Random.Range (0, matrix.xMax);
 		yOrigin = Random.Range (0, matrix.yMax);
@@ -18,6 +20,11 @@ public class Map : MonoBehaviour {
 		GridElement gridElement = panel.GetComponent<GridElement> ();
 
 		gridElement.transform.Find ("Body").GetComponent<SpriteRenderer> ().color = Color.red;
+		playerMarker.transform.position = panel.transform.position;
+		playerMarker.GetComponent<PlayerMarker>().matrix = matrix;
+		playerMarker.GetComponent<PlayerMarker> ().xPosition = xOrigin;
+		playerMarker.GetComponent<PlayerMarker> ().yPosition = yOrigin;
+		matrix.grid.AlignTransform (playerMarker.transform);
 
 		PopulateNeighbors (gridElement);
 	}

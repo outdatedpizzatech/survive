@@ -77,6 +77,7 @@
      <Compile Include="Assets\GridElement.cs" />
      <Compile Include="Assets\Map.cs" />
      <Compile Include="Assets\Matrix.cs" />
+     <Compile Include="Assets\PlayerMarker.cs" />
      <None Include="Assets\Grid Framework\readme.txt" />
      <None Include="Assets\Plugins\Grid Framework\Resources\Default.shader" />
      <None Include="Assets\Grid Framework\Examples\Level Design + Text Parsing\Level Design Files\Level 3.txt" />

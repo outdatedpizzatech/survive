@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Matrix : MonoBehaviour {
 	public GameObject[,] matrix;
-	private GFRectGrid grid;
+	public GFRectGrid grid;
 	public int xMax;
 	public int yMax;
 
@@ -78,12 +78,18 @@ public class Matrix : MonoBehaviour {
 
 	public bool CanInsertAtPosition(int x, int y){
 		bool canInsert = false;
-		print (x + " vs. " + xMax);
 		if (x >= 0 && y >= 0 && x < xMax && y < yMax) {
 			canInsert = matrix[x, y] == null;
 		}
-		print ("can insert " + canInsert);
 		return(canInsert);
+	}
+
+	public bool HasRoomAt(int x, int y){
+		bool hasRoomAt = false;
+		if (x >= 0 && y >= 0 && x < xMax && y < yMax) {
+			hasRoomAt = matrix[x, y] != null;
+		}
+		return(hasRoomAt);
 	}
 	
 	private int CoordinateToPosition(float coordinate, float renderTo, float spacing){
