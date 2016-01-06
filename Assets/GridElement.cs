@@ -6,39 +6,39 @@ public class GridElement : MonoBehaviour {
 	public int xPosition;
 	public int yPosition;
 	private Matrix matrix;
-	private bool alive = true;
-	public Color color;
-	public int colorIndex;
-	public bool insertedIntoMatrix;
-	public static Color[] colors = {
-		Color.red,
-		new Color(1, .5f, 0),
-		Color.yellow,
-		Color.green,
-		new Color(.2f, .5f, 1),
-		new Color(.9f, 0, .9f)
-	};
-	public bool canChain = true;
-	public int permanentColorIndex;
+//	private bool alive = true;
+//	public Color color;
+//	public int colorIndex;
+//	public bool insertedIntoMatrix;
+//	public static Color[] colors = {
+//		Color.red,
+//		new Color(1, .5f, 0),
+//		Color.yellow,
+//		Color.green,
+//		new Color(.2f, .5f, 1),
+//		new Color(.9f, 0, .9f)
+//	};
+//	public bool canChain = true;
+//	public int permanentColorIndex;
 //	private Direction explosionDirection;
-	protected bool readyToExplode = false;
-	private float maxExplosionTimer = .1f;
-	private float currentExplosionTimer;
-	public bool colorSet = false;
-	private bool permanentColorSet = false;
-	public bool survivesExplosion = false;
-	public bool white = false;
-	public bool black = false;
-	public bool permanentWhite = false;
-	public bool permanentBlack = false;
-	public bool countable = true;
-	private int refundValue = 0;
-	public bool brown = false;
-	public bool gray = false;
-	private float colorDelay;
-	private bool delayedColorSet = true;
-	public bool canBeReplaced;
-	public string friendlyName;
+//	protected bool readyToExplode = false;
+//	private float maxExplosionTimer = .1f;
+//	private float currentExplosionTimer;
+//	public bool colorSet = false;
+//	private bool permanentColorSet = false;
+//	public bool survivesExplosion = false;
+//	public bool white = false;
+//	public bool black = false;
+//	public bool permanentWhite = false;
+//	public bool permanentBlack = false;
+//	public bool countable = true;
+//	private int refundValue = 0;
+//	public bool brown = false;
+//	public bool gray = false;
+//	private float colorDelay;
+//	private bool delayedColorSet = true;
+//	public bool canBeReplaced;
+//	public string friendlyName;
 	
 	public enum Direction { None, Forward, Backward };
 
@@ -47,17 +47,17 @@ public class GridElement : MonoBehaviour {
 		gameObject.name = Random.Range (0, 9999999).ToString ();
 	}
 	
-	public void InitializeColor(){
-		UpdateColorByIndex (colorIndex);
+//	public void InitializeColor(){
+//		UpdateColorByIndex (colorIndex);
 //		SetColor();
-	}
+//	}
 	
-	private Matrix Matrix(){
-		if(matrix == null){
-			matrix = GameObject.Find ("Grid").GetComponent<Matrix>();
-		}
-		return(matrix);
-	}
+//	private Matrix Matrix(){
+//		if(matrix == null){
+//			matrix = GameObject.Find ("Grid").GetComponent<Matrix>();
+//		}
+//		return(matrix);
+//	}
 	
 //	public void SetColor(){
 //		GetComponent<MeshRenderer>().material.SetColor ("_Color", color);
@@ -105,15 +105,15 @@ public class GridElement : MonoBehaviour {
 //		readyToExplode = true;
 //	}
 	
-	public void UpdateColorByIndex(int inputColorIndex){
-		UpdateColorByIndex (inputColorIndex, 0);
-	}
-	
-	public void UpdateColorByIndex(int inputColorIndex, float delay){
-		colorIndex = inputColorIndex;
-		color = colors[inputColorIndex];
-		UpdateColor (delay);
-	}
+//	public void UpdateColorByIndex(int inputColorIndex){
+//		UpdateColorByIndex (inputColorIndex, 0);
+//	}
+//	
+//	public void UpdateColorByIndex(int inputColorIndex, float delay){
+//		colorIndex = inputColorIndex;
+//		color = colors[inputColorIndex];
+//		UpdateColor (delay);
+//	}
 	
 	public void SetPosition(int xPositionIn, int yPositionIn){
 		xPosition = xPositionIn;
@@ -121,124 +121,124 @@ public class GridElement : MonoBehaviour {
 		Vector3 newPosition = transform.position;
 		newPosition.z = 2;
 		transform.position = newPosition;
-		insertedIntoMatrix = true;
+//		insertedIntoMatrix = true;
 	}
 	
-	public ArrayList CardinalNeighbors(){
-		ArrayList neighbors = new ArrayList();
-		GameObject neighbor;
-		neighbor = Matrix().ElementAtArrayPosition (xPosition - 1, yPosition);
-		neighbors.Add (neighbor);
-		neighbor = Matrix().ElementAtArrayPosition (xPosition + 1, yPosition);
-		neighbors.Add (neighbor);
-		neighbor = Matrix().ElementAtArrayPosition (xPosition, yPosition - 1);
-		neighbors.Add (neighbor);
-		neighbor = Matrix().ElementAtArrayPosition (xPosition, yPosition + 1);
-		neighbors.Add (neighbor);
-		return(neighbors);
-	}
+//	public ArrayList CardinalNeighbors(){
+//		ArrayList neighbors = new ArrayList();
+//		GameObject neighbor;
+//		neighbor = Matrix().ElementAtArrayPosition (xPosition - 1, yPosition);
+//		neighbors.Add (neighbor);
+//		neighbor = Matrix().ElementAtArrayPosition (xPosition + 1, yPosition);
+//		neighbors.Add (neighbor);
+//		neighbor = Matrix().ElementAtArrayPosition (xPosition, yPosition - 1);
+//		neighbors.Add (neighbor);
+//		neighbor = Matrix().ElementAtArrayPosition (xPosition, yPosition + 1);
+//		neighbors.Add (neighbor);
+//		return(neighbors);
+//	}
+//	
+//	public ArrayList AllNeighbors(){
+//		ArrayList neighbors = new ArrayList();
+//		GameObject neighbor;
+//		neighbor = Matrix().ElementAtArrayPosition (xPosition, yPosition + 1);
+//		neighbors.Add (neighbor);
+//		neighbor = Matrix().ElementAtArrayPosition (xPosition + 1, yPosition + 1);
+//		neighbors.Add (neighbor);
+//		neighbor = Matrix().ElementAtArrayPosition (xPosition + 1, yPosition);
+//		neighbors.Add (neighbor);
+//		neighbor = Matrix().ElementAtArrayPosition (xPosition + 1, yPosition - 1);
+//		neighbors.Add (neighbor);
+//		neighbor = Matrix().ElementAtArrayPosition (xPosition, yPosition - 1);
+//		neighbors.Add (neighbor);
+//		neighbor = Matrix().ElementAtArrayPosition (xPosition - 1, yPosition - 1);
+//		neighbors.Add (neighbor);
+//		neighbor = Matrix().ElementAtArrayPosition (xPosition - 1, yPosition);
+//		neighbors.Add (neighbor);
+//		neighbor = Matrix().ElementAtArrayPosition (xPosition - 1, yPosition + 1);
+//		neighbors.Add (neighbor);
+//		return(neighbors);
+//	}
 	
-	public ArrayList AllNeighbors(){
-		ArrayList neighbors = new ArrayList();
-		GameObject neighbor;
-		neighbor = Matrix().ElementAtArrayPosition (xPosition, yPosition + 1);
-		neighbors.Add (neighbor);
-		neighbor = Matrix().ElementAtArrayPosition (xPosition + 1, yPosition + 1);
-		neighbors.Add (neighbor);
-		neighbor = Matrix().ElementAtArrayPosition (xPosition + 1, yPosition);
-		neighbors.Add (neighbor);
-		neighbor = Matrix().ElementAtArrayPosition (xPosition + 1, yPosition - 1);
-		neighbors.Add (neighbor);
-		neighbor = Matrix().ElementAtArrayPosition (xPosition, yPosition - 1);
-		neighbors.Add (neighbor);
-		neighbor = Matrix().ElementAtArrayPosition (xPosition - 1, yPosition - 1);
-		neighbors.Add (neighbor);
-		neighbor = Matrix().ElementAtArrayPosition (xPosition - 1, yPosition);
-		neighbors.Add (neighbor);
-		neighbor = Matrix().ElementAtArrayPosition (xPosition - 1, yPosition + 1);
-		neighbors.Add (neighbor);
-		return(neighbors);
-	}
+//	public void UpdateColor(){
+//		UpdateColor (0);
+//	}
 	
-	public void UpdateColor(){
-		UpdateColor (0);
-	}
+//	public void UpdateColor(float delay){
+//		colorDelay = delay;
+//		delayedColorSet = false;
+//		if(gray){	
+//			color = Color.gray;
+//		}else if(brown){
+//			color = new Color(.55f, .25f, 0);
+//		}else if(white){
+//			color = Color.white;
+//		}else if(black){
+//			color = Color.black;
+//		}
+//	}
 	
-	public void UpdateColor(float delay){
-		colorDelay = delay;
-		delayedColorSet = false;
-		if(gray){	
-			color = Color.gray;
-		}else if(brown){
-			color = new Color(.55f, .25f, 0);
-		}else if(white){
-			color = Color.white;
-		}else if(black){
-			color = Color.black;
-		}
-	}
+//	private void ManageHoverState(){
+//		Transform lockIcon = transform.Find("X");
+//		
+//		if(Matrix ().CanInsertIntoMatrix(gameObject)){
+//			UpdateHoverColor();
+//			if(lockIcon){
+//				lockIcon.gameObject.SetActive(false);
+//				GetComponent<MeshRenderer>().enabled = true;
+//			}
+//		}else{
+//			if(lockIcon){
+//				lockIcon.gameObject.SetActive(true);
+//				GetComponent<MeshRenderer>().enabled = false;
+//			}
+//		}
+//	}
 	
-	private void ManageHoverState(){
-		Transform lockIcon = transform.Find("X");
-		
-		if(Matrix ().CanInsertIntoMatrix(gameObject)){
-			UpdateHoverColor();
-			if(lockIcon){
-				lockIcon.gameObject.SetActive(false);
-				GetComponent<MeshRenderer>().enabled = true;
-			}
-		}else{
-			if(lockIcon){
-				lockIcon.gameObject.SetActive(true);
-				GetComponent<MeshRenderer>().enabled = false;
-			}
-		}
-	}
-	
-	private void UpdateHoverColor(){
-		GameObject objectAtPosition = Matrix ().ElementAtVectorPosition(transform.position);
-		gray = false;
-		brown = false;
-		white = permanentWhite;
-		black = permanentBlack;
-		if(objectAtPosition){
-			if((permanentBlack && objectAtPosition.GetComponent<GridElement>().permanentWhite) || (permanentWhite && objectAtPosition.GetComponent<GridElement>().permanentBlack)){
-				gray = true;
-				UpdateColor ();
-			}else if(!permanentBlack && objectAtPosition.GetComponent<GridElement>().permanentBlack){
-				black = true;
-				UpdateColor ();
-			}else if(permanentBlack && !objectAtPosition.GetComponent<GridElement>().permanentBlack){
-				//do nothing
-			}else if(!permanentWhite && objectAtPosition.GetComponent<GridElement>().permanentWhite){
-				UpdateColorByIndex (permanentColorIndex);
-			}else if(permanentWhite && !objectAtPosition.GetComponent<GridElement>().permanentWhite){
-				white = false;
-				UpdateColorByIndex (objectAtPosition.GetComponent<GridElement>().permanentColorIndex);
-			}else{
-				int foundColorIndex = objectAtPosition.GetComponent<GridElement>().colorIndex;
-				int mixedColorIndex = MixColorIndexes(permanentColorIndex, foundColorIndex);
-				brown = (mixedColorIndex >= colors.Length);
-				if(brown){
-					UpdateColor ();
-				}else{
-					UpdateColorByIndex (mixedColorIndex);
-				}
-			}
-		}else{
-			UpdateColorByIndex (permanentColorIndex);
-		}
-	}	
-	
-	private void HandleExplosion(){
-		if(readyToExplode){
-			if(currentExplosionTimer < maxExplosionTimer){
-				currentExplosionTimer += Time.deltaTime;
-			}else{
-//				Explode ();
-			}
-		}
-	}
+//	private void UpdateHoverColor(){
+//		GameObject objectAtPosition = Matrix ().ElementAtVectorPosition(transform.position);
+//		gray = false;
+//		brown = false;
+//		white = permanentWhite;
+//		black = permanentBlack;
+//		if(objectAtPosition){
+//			if((permanentBlack && objectAtPosition.GetComponent<GridElement>().permanentWhite) || (permanentWhite && objectAtPosition.GetComponent<GridElement>().permanentBlack)){
+//				gray = true;
+//				UpdateColor ();
+//			}else if(!permanentBlack && objectAtPosition.GetComponent<GridElement>().permanentBlack){
+//				black = true;
+//				UpdateColor ();
+//			}else if(permanentBlack && !objectAtPosition.GetComponent<GridElement>().permanentBlack){
+//				//do nothing
+//			}else if(!permanentWhite && objectAtPosition.GetComponent<GridElement>().permanentWhite){
+//				UpdateColorByIndex (permanentColorIndex);
+//			}else if(permanentWhite && !objectAtPosition.GetComponent<GridElement>().permanentWhite){
+//				white = false;
+//				UpdateColorByIndex (objectAtPosition.GetComponent<GridElement>().permanentColorIndex);
+//			}else{
+//				int foundColorIndex = objectAtPosition.GetComponent<GridElement>().colorIndex;
+//				int mixedColorIndex = MixColorIndexes(permanentColorIndex, foundColorIndex);
+//				brown = (mixedColorIndex >= colors.Length);
+//				if(brown){
+//					UpdateColor ();
+//				}else{
+//					UpdateColorByIndex (mixedColorIndex);
+//				}
+//			}
+//		}else{
+//			UpdateColorByIndex (permanentColorIndex);
+//		}
+//	}	
+//	
+//	private void HandleExplosion(){
+//		if(readyToExplode){
+//			if(currentExplosionTimer < maxExplosionTimer){
+//				currentExplosionTimer += Time.deltaTime;
+//			}else{
+////				Explode ();
+//			}
+//		}
+//	}
 	
 	
 //	private void Explode(){
@@ -340,13 +340,13 @@ public class GridElement : MonoBehaviour {
 //		}
 //	}
 	
-	private bool ColorMatches(GridElement neighbor){
-		return(colorIndex == neighbor.GetComponent<GridElement>().colorIndex);
-	}
-	
-	private bool DirectionMatchesNeighbor(Direction direction, GridElement neighbor){
-		return(GetDirection(colorIndex, neighbor.colorIndex) == direction);
-	}
+//	private bool ColorMatches(GridElement neighbor){
+//		return(colorIndex == neighbor.GetComponent<GridElement>().colorIndex);
+//	}
+//	
+//	private bool DirectionMatchesNeighbor(Direction direction, GridElement neighbor){
+//		return(GetDirection(colorIndex, neighbor.colorIndex) == direction);
+//	}
 	
 //	private void UpdateGameValues(){
 //		bool bonusGiven = false;
@@ -378,70 +378,70 @@ public class GridElement : MonoBehaviour {
 //		Destroy (gameObject);
 //	}
 	
-	private Direction GetDirection(int colorFrom, int colorTo){
-		if(colorTo == colors.Length - 1 && colorFrom == 0){
-			return(Direction.Backward);
-		}else if(colorFrom == colors.Length - 1 && colorTo == 0){
-			return(Direction.Forward);
-		}else if(colorTo - colorFrom == 1){
-			return(Direction.Forward);
-		}else if(colorTo - colorFrom == -1){
-			return(Direction.Backward);
-		}else{
-			return(Direction.None);
-		}
-	}
-	
-	public int MixColorIndexes(int color1, int color2){
-		if(color1 > color2){
-			int tempColor = color1;
-			color1 = color2;
-			color2 = tempColor;
-		}
-		if(color2 - color1 > 3){
-			color1 += 6;
-		}
-		if(color1 == color2){
-			return(color1);
-		}else if(Mathf.Abs (color2 - color1) == 3){
-			return(colors.Length);
-		}else if((color2 + color1) % 2 == 1){
-			if(color2 % 2 == 0){
-				return(color2 % 6);
-			}else{
-				return(color1 % 6);
-			}		
-		}else{
-			return(((color1 + color2) / 2) % 6);
-		}
-	}
-	
-	
-	public static int RandomizedColorIndex(float[] colorProbability){
-		int index;
-		float randomValue = Random.value;
-		if(randomValue < ProbabilityIndex (0, colorProbability)){
-			index = 0;
-		}else if(randomValue < ProbabilityIndex (1, colorProbability)){
-			index = 1;
-		}else if(randomValue < ProbabilityIndex (2, colorProbability)){
-			index = 2;
-		}else if(randomValue < ProbabilityIndex (3, colorProbability)){
-			index = 3;
-		}else if(randomValue < ProbabilityIndex (4, colorProbability)){
-			index = 4;
-		}else{
-			index = 5;
-		}
-		return(index);
-	}
-	
-	private static float ProbabilityIndex(int v, float[] colorProbability){
-		float probability = 0;
-		for(int i = v; i >= 0; i--){
-			probability += colorProbability[i];
-		}
-		return(probability);
-	}
+//	private Direction GetDirection(int colorFrom, int colorTo){
+//		if(colorTo == colors.Length - 1 && colorFrom == 0){
+//			return(Direction.Backward);
+//		}else if(colorFrom == colors.Length - 1 && colorTo == 0){
+//			return(Direction.Forward);
+//		}else if(colorTo - colorFrom == 1){
+//			return(Direction.Forward);
+//		}else if(colorTo - colorFrom == -1){
+//			return(Direction.Backward);
+//		}else{
+//			return(Direction.None);
+//		}
+//	}
+//	
+//	public int MixColorIndexes(int color1, int color2){
+//		if(color1 > color2){
+//			int tempColor = color1;
+//			color1 = color2;
+//			color2 = tempColor;
+//		}
+//		if(color2 - color1 > 3){
+//			color1 += 6;
+//		}
+//		if(color1 == color2){
+//			return(color1);
+//		}else if(Mathf.Abs (color2 - color1) == 3){
+//			return(colors.Length);
+//		}else if((color2 + color1) % 2 == 1){
+//			if(color2 % 2 == 0){
+//				return(color2 % 6);
+//			}else{
+//				return(color1 % 6);
+//			}		
+//		}else{
+//			return(((color1 + color2) / 2) % 6);
+//		}
+//	}
+//	
+//	
+//	public static int RandomizedColorIndex(float[] colorProbability){
+//		int index;
+//		float randomValue = Random.value;
+//		if(randomValue < ProbabilityIndex (0, colorProbability)){
+//			index = 0;
+//		}else if(randomValue < ProbabilityIndex (1, colorProbability)){
+//			index = 1;
+//		}else if(randomValue < ProbabilityIndex (2, colorProbability)){
+//			index = 2;
+//		}else if(randomValue < ProbabilityIndex (3, colorProbability)){
+//			index = 3;
+//		}else if(randomValue < ProbabilityIndex (4, colorProbability)){
+//			index = 4;
+//		}else{
+//			index = 5;
+//		}
+//		return(index);
+//	}
+//	
+//	private static float ProbabilityIndex(int v, float[] colorProbability){
+//		float probability = 0;
+//		for(int i = v; i >= 0; i--){
+//			probability += colorProbability[i];
+//		}
+//		return(probability);
+//	}
 	
 }

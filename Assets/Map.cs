@@ -30,36 +30,36 @@ public class Map : MonoBehaviour {
 	}
 
 	void PopulateNeighbors (GridElement gridElement){
+		bool doorGenerated;
+
 		if (Random.value < .5f) {
-			if (matrix.CanInsertAtPosition (gridElement.xPosition, gridElement.yPosition + 1)) {
-				gridElement.transform.Find ("Doors").Find ("Top").gameObject.SetActive (true);
-				InsertNewRoom (gridElement.xPosition, gridElement.yPosition + 1);
-				gridElement.GetComponent<Room> ().northDoor = true;
-			}
+			doorGenerated = GenerateDoor (0, 1, "Top", gridElement);
+			if (doorGenerated) gridElement.GetComponent<Room> ().northDoor = true;
 		}
 
 		if (Random.value < .5f) {
-			if (matrix.CanInsertAtPosition (gridElement.xPosition, gridElement.yPosition - 1)) {
-				gridElement.transform.Find ("Doors").Find ("Bottom").gameObject.SetActive (true);
-				InsertNewRoom (gridElement.xPosition, gridElement.yPosition - 1);
-				gridElement.GetComponent<Room> ().southDoor = true;
-			}
+			doorGenerated = GenerateDoor (0, -1, "Bottom", gridElement);
+			if (doorGenerated) gridElement.GetComponent<Room> ().southDoor = true;
 		}
 
 		if (Random.value < .5f) {
-			if (matrix.CanInsertAtPosition (gridElement.xPosition + 1, gridElement.yPosition)) {
-				gridElement.transform.Find ("Doors").Find ("Right").gameObject.SetActive (true);
-				InsertNewRoom (gridElement.xPosition + 1, gridElement.yPosition);
-				gridElement.GetComponent<Room> ().eastDoor = true;
-			}
+			doorGenerated = GenerateDoor (1, 0, "Right", gridElement);
+			if (doorGenerated) gridElement.GetComponent<Room> ().eastDoor = true;
 		}
-//
+
 		if (Random.value < .5f) {
-			if (matrix.CanInsertAtPosition (gridElement.xPosition - 1, gridElement.yPosition)) {
-				gridElement.GetComponent<Room> ().westDoor = true;
-				gridElement.transform.Find ("Doors").Find ("Left").gameObject.SetActive (true);
-				InsertNewRoom (gridElement.xPosition - 1, gridElement.yPosition);
-			}
+			doorGenerated = GenerateDoor (-1, 0, "Left", gridElement);
+			if (doorGenerated) gridElement.GetComponent<Room> ().westDoor = true;
+		}
+	}
+
+	bool GenerateDoor(int xOffset, int yOffset, string doorName, GridElement gridElement){
+		if (matrix.CanInsertAtPosition (gridElement.xPosition + xOffset, gridElement.yPosition + yOffset)) {
+			gridElement.transform.Find ("Doors").Find (doorName).gameObject.SetActive (true);
+			InsertNewRoom (gridElement.xPosition + xOffset, gridElement.yPosition + yOffset);
+			return(true);
+		}else{
+			return(false);
 		}
 	}
 	
