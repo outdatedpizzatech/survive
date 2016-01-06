@@ -18,17 +18,30 @@ public class PlayerMarker : MonoBehaviour {
 	}
 
 	void MoveSomewhere(int xOffset, int yOffset){
-		Room destination = matrix.RoomAt(xPosition + xOffset, yPosition + yOffset);
-		if(destination != null){
-			Room origin = matrix.RoomAt (xPosition, yPosition);
-			if (origin.DoorAt(xOffset, yOffset) || destination.DoorAt(xOffset * -1, yOffset * -1)) {
-				GameObject room = matrix.ElementAtArrayPosition (xPosition + xOffset, yPosition + yOffset);
-				transform.position = room.transform.position;
-				matrix.grid.AlignTransform (transform);
-				xPosition += xOffset;
-				yPosition += yOffset;
+		if(!GameController.frozen){
+			Room destination = matrix.RoomAt(xPosition + xOffset, yPosition + yOffset);
+			if(destination != null){
+				Room origin = matrix.RoomAt (xPosition, yPosition);
+				if (origin.DoorAt(xOffset, yOffset) || destination.DoorAt(xOffset * -1, yOffset * -1)) {
+					GameObject room = matrix.ElementAtArrayPosition (xPosition + xOffset, yPosition + yOffset);
+					transform.position = room.transform.position;
+					matrix.grid.AlignTransform (transform);
+					xPosition += xOffset;
+					yPosition += yOffset;
+
+					SpeechBubble.mainBubble.Activate ();
+					SpeechBubble.mainBubble.textToDisplay = destination.messages;
+
+					if (destination.encounter) {
+						StartEncounter ();
+					}
+				}
 			}
 		}
+	}
+
+	public void StartEncounter(){
+		GameController.EnterEncounter ();
 	}
 
 	public void MoveUp(){

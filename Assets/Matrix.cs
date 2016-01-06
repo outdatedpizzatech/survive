@@ -19,62 +19,62 @@ public class Matrix : MonoBehaviour {
 	void Update () {
 	}
 	
-	public bool InsertIntoMatrix(GameObject objectToInsert){
-		grid.AlignTransform(objectToInsert.transform);
-		
-		int xArrayPosition = CoordinateToPosition(objectToInsert.transform.position.x, grid.renderTo.x, grid.spacing.x);
-		int yArrayPosition = CoordinateToPosition(objectToInsert.transform.position.y, grid.renderTo.y, grid.spacing.y);
-		if(CanInsertIntoMatrix(objectToInsert)){
-			if(matrix[xArrayPosition, yArrayPosition]){
-				Destroy (matrix[xArrayPosition, yArrayPosition]);
-			}
-			
-			matrix[xArrayPosition, yArrayPosition] = objectToInsert;
-			objectToInsert.GetComponent<GridElement>().SetPosition(xArrayPosition, yArrayPosition);
-			return(true);
-		}else{
-			return(false);
-		}
-	}
-	
-	public bool InsertIntoMatrixWithoutDestroy(GameObject objectToInsert){
-		grid.AlignTransform(objectToInsert.transform);
-		
-		int xArrayPosition = CoordinateToPosition(objectToInsert.transform.position.x, grid.renderTo.x, grid.spacing.x);
-		int yArrayPosition = CoordinateToPosition(objectToInsert.transform.position.y, grid.renderTo.y, grid.spacing.y);
-		if(CanInsertIntoMatrix(objectToInsert)){
-			matrix[xArrayPosition, yArrayPosition] = objectToInsert;
+//	public bool InsertIntoMatrix(GameObject objectToInsert){
+//		grid.AlignTransform(objectToInsert.transform);
+//		
+//		int xArrayPosition = CoordinateToPosition(objectToInsert.transform.position.x, grid.renderTo.x, grid.spacing.x);
+//		int yArrayPosition = CoordinateToPosition(objectToInsert.transform.position.y, grid.renderTo.y, grid.spacing.y);
+//		if(CanInsertIntoMatrix(objectToInsert)){
+//			if(matrix[xArrayPosition, yArrayPosition]){
+//				Destroy (matrix[xArrayPosition, yArrayPosition]);
+//			}
+//			
+//			matrix[xArrayPosition, yArrayPosition] = objectToInsert;
 //			objectToInsert.GetComponent<GridElement>().SetPosition(xArrayPosition, yArrayPosition);
-			return(true);
-		}else{
-			return(false);
-		}
-	}
+//			return(true);
+//		}else{
+//			return(false);
+//		}
+//	}
+//	
+//	public bool InsertIntoMatrixWithoutDestroy(GameObject objectToInsert){
+//		grid.AlignTransform(objectToInsert.transform);
+//		
+//		int xArrayPosition = CoordinateToPosition(objectToInsert.transform.position.x, grid.renderTo.x, grid.spacing.x);
+//		int yArrayPosition = CoordinateToPosition(objectToInsert.transform.position.y, grid.renderTo.y, grid.spacing.y);
+//		if(CanInsertIntoMatrix(objectToInsert)){
+//			matrix[xArrayPosition, yArrayPosition] = objectToInsert;
+////			objectToInsert.GetComponent<GridElement>().SetPosition(xArrayPosition, yArrayPosition);
+//			return(true);
+//		}else{
+//			return(false);
+//		}
+//	}
 	
-	public bool CanInsertIntoMatrix(GameObject objectToInsert){
-		int xArrayPosition = CoordinateToPosition(objectToInsert.transform.position.x, grid.renderTo.x, grid.spacing.x);
-		int yArrayPosition = CoordinateToPosition(objectToInsert.transform.position.y, grid.renderTo.y, grid.spacing.y);
-		if(xArrayPosition < xMax && yArrayPosition < yMax && xArrayPosition >= 0 && yArrayPosition >= 0){
-			if(matrix[xArrayPosition, yArrayPosition] == null){
-				return(true);
-			}else{
-//				GridElement elementAtPosition = matrix[xArrayPosition, yArrayPosition].GetComponent<GridElement>();
-//				bool canInsert = elementAtPosition.canBeReplaced;
-//				if(canInsert){
-//					if(elementAtPosition.Disabled() && objectToInsert.GetComponent<GridElement>().black){
-//						canInsert = true;
-//					}else if(elementAtPosition.Disabled()){
-//						canInsert = false;
-//					}else{
-//						canInsert = true;
-//					}
-//				}
-				return(true);
-			}
-		}else{
-			return(false);
-		}
-	}
+//	public bool CanInsertIntoMatrix(GameObject objectToInsert){
+//		int xArrayPosition = CoordinateToPosition(objectToInsert.transform.position.x, grid.renderTo.x, grid.spacing.x);
+//		int yArrayPosition = CoordinateToPosition(objectToInsert.transform.position.y, grid.renderTo.y, grid.spacing.y);
+//		if(xArrayPosition < xMax && yArrayPosition < yMax && xArrayPosition >= 0 && yArrayPosition >= 0){
+//			if(matrix[xArrayPosition, yArrayPosition] == null){
+//				return(true);
+//			}else{
+////				GridElement elementAtPosition = matrix[xArrayPosition, yArrayPosition].GetComponent<GridElement>();
+////				bool canInsert = elementAtPosition.canBeReplaced;
+////				if(canInsert){
+////					if(elementAtPosition.Disabled() && objectToInsert.GetComponent<GridElement>().black){
+////						canInsert = true;
+////					}else if(elementAtPosition.Disabled()){
+////						canInsert = false;
+////					}else{
+////						canInsert = true;
+////					}
+////				}
+//				return(true);
+//			}
+//		}else{
+//			return(false);
+//		}
+//	}
 
 	public bool CanInsertAtPosition(int x, int y){
 		bool canInsert = false;
@@ -95,10 +95,10 @@ public class Matrix : MonoBehaviour {
 		return(roomAt);
 	}
 	
-	private int CoordinateToPosition(float coordinate, float renderTo, float spacing){
-		float position = coordinate * (1/spacing) + (spacing/2) + renderTo - 1;
-		return(Mathf.CeilToInt(position));
-	}
+//	private int CoordinateToPosition(float coordinate, float renderTo, float spacing){
+//		float position = coordinate * (1/spacing) + (spacing/2) + renderTo - 1;
+//		return(Mathf.CeilToInt(position));
+//	}
 	
 	public Vector3 PositionToCoordinate(int x, int y){
 		float newX = (x - RenderTo().x + 1 - (Spacing ().x/2)) * Spacing().x;
@@ -114,15 +114,15 @@ public class Matrix : MonoBehaviour {
 		}		
 	}
 	
-	public GameObject ElementAtVectorPosition(Vector3 position){
-		int xArrayPosition = CoordinateToPosition(position.x, RenderTo().x, Spacing().x);
-		int yArrayPosition = CoordinateToPosition(position.y, RenderTo().y, Spacing().y);
-		if(xArrayPosition < xMax && yArrayPosition < yMax && xArrayPosition >= 0 && yArrayPosition >= 0 && matrix[xArrayPosition, yArrayPosition]){
-			return(matrix[xArrayPosition, yArrayPosition]);
-		}else{
-			return(null);
-		}
-	}
+//	public GameObject ElementAtVectorPosition(Vector3 position){
+//		int xArrayPosition = CoordinateToPosition(position.x, RenderTo().x, Spacing().x);
+//		int yArrayPosition = CoordinateToPosition(position.y, RenderTo().y, Spacing().y);
+//		if(xArrayPosition < xMax && yArrayPosition < yMax && xArrayPosition >= 0 && yArrayPosition >= 0 && matrix[xArrayPosition, yArrayPosition]){
+//			return(matrix[xArrayPosition, yArrayPosition]);
+//		}else{
+//			return(null);
+//		}
+//	}
 	
 	private Vector3 RenderTo(){
 		return(grid.renderTo);

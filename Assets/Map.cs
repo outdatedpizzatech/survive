@@ -27,6 +27,9 @@ public class Map : MonoBehaviour {
 		matrix.grid.AlignTransform (playerMarker.transform);
 
 		PopulateNeighbors (gridElement);
+
+		SpeechBubble.mainBubble.Activate ();
+		SpeechBubble.mainBubble.textToDisplay = new string[] { "blah blah blah" };
 	}
 
 	void PopulateNeighbors (GridElement gridElement){
