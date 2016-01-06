@@ -4,8 +4,8 @@ using System.Collections;
 public class Matrix : MonoBehaviour {
 	public GameObject[,] matrix;
 	private GFRectGrid grid;
-	private int xMax;
-	private int yMax;
+	public int xMax;
+	public int yMax;
 
 	// Use this for initialization
 	void Start () {
@@ -44,7 +44,7 @@ public class Matrix : MonoBehaviour {
 		int yArrayPosition = CoordinateToPosition(objectToInsert.transform.position.y, grid.renderTo.y, grid.spacing.y);
 		if(CanInsertIntoMatrix(objectToInsert)){
 			matrix[xArrayPosition, yArrayPosition] = objectToInsert;
-			objectToInsert.GetComponent<GridElement>().SetPosition(xArrayPosition, yArrayPosition);
+//			objectToInsert.GetComponent<GridElement>().SetPosition(xArrayPosition, yArrayPosition);
 			return(true);
 		}else{
 			return(false);
@@ -58,22 +58,32 @@ public class Matrix : MonoBehaviour {
 			if(matrix[xArrayPosition, yArrayPosition] == null){
 				return(true);
 			}else{
-				GridElement elementAtPosition = matrix[xArrayPosition, yArrayPosition].GetComponent<GridElement>();
-				bool canInsert = elementAtPosition.canBeReplaced;
-				if(canInsert){
-					if(elementAtPosition.Disabled() && objectToInsert.GetComponent<GridElement>().black){
-						canInsert = true;
-					}else if(elementAtPosition.Disabled()){
-						canInsert = false;
-					}else{
-						canInsert = true;
-					}
-				}
-				return(canInsert);
+//				GridElement elementAtPosition = matrix[xArrayPosition, yArrayPosition].GetComponent<GridElement>();
+//				bool canInsert = elementAtPosition.canBeReplaced;
+//				if(canInsert){
+//					if(elementAtPosition.Disabled() && objectToInsert.GetComponent<GridElement>().black){
+//						canInsert = true;
+//					}else if(elementAtPosition.Disabled()){
+//						canInsert = false;
+//					}else{
+//						canInsert = true;
+//					}
+//				}
+				return(true);
 			}
 		}else{
 			return(false);
 		}
+	}
+
+	public bool CanInsertAtPosition(int x, int y){
+		bool canInsert = false;
+		print (x + " vs. " + xMax);
+		if (x >= 0 && y >= 0 && x < xMax && y < yMax) {
+			canInsert = matrix[x, y] == null;
+		}
+		print ("can insert " + canInsert);
+		return(canInsert);
 	}
 	
 	private int CoordinateToPosition(float coordinate, float renderTo, float spacing){
@@ -83,7 +93,7 @@ public class Matrix : MonoBehaviour {
 	
 	public Vector3 PositionToCoordinate(int x, int y){
 		float newX = (x - RenderTo().x + 1 - (Spacing ().x/2)) * Spacing().x;
-		float newY = (y - RenderTo().y + 1 - (Spacing ().y/2)) * Spacing().y;
+		float newY = (y - RenderTo().y - (Spacing ().y/2)) * Spacing().y;
 		return(new Vector3(newX, newY, 0));		
 	}
 	
