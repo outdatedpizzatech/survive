@@ -84,12 +84,15 @@ public class Matrix : MonoBehaviour {
 		return(canInsert);
 	}
 
-	public bool HasRoomAt(int x, int y){
-		bool hasRoomAt = false;
+	public Room RoomAt(int x, int y){
+		Room roomAt = null;
 		if (x >= 0 && y >= 0 && x < xMax && y < yMax) {
-			hasRoomAt = matrix[x, y] != null;
+			GameObject retrievedObject = matrix[x, y];
+			if (retrievedObject != null) {
+				roomAt = retrievedObject.GetComponent<Room> ();
+			}
 		}
-		return(hasRoomAt);
+		return(roomAt);
 	}
 	
 	private int CoordinateToPosition(float coordinate, float renderTo, float spacing){

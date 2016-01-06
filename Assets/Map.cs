@@ -34,6 +34,7 @@ public class Map : MonoBehaviour {
 			if (matrix.CanInsertAtPosition (gridElement.xPosition, gridElement.yPosition + 1)) {
 				gridElement.transform.Find ("Doors").Find ("Top").gameObject.SetActive (true);
 				InsertNewRoom (gridElement.xPosition, gridElement.yPosition + 1);
+				gridElement.GetComponent<Room> ().northDoor = true;
 			}
 		}
 
@@ -41,6 +42,7 @@ public class Map : MonoBehaviour {
 			if (matrix.CanInsertAtPosition (gridElement.xPosition, gridElement.yPosition - 1)) {
 				gridElement.transform.Find ("Doors").Find ("Bottom").gameObject.SetActive (true);
 				InsertNewRoom (gridElement.xPosition, gridElement.yPosition - 1);
+				gridElement.GetComponent<Room> ().southDoor = true;
 			}
 		}
 
@@ -48,11 +50,13 @@ public class Map : MonoBehaviour {
 			if (matrix.CanInsertAtPosition (gridElement.xPosition + 1, gridElement.yPosition)) {
 				gridElement.transform.Find ("Doors").Find ("Right").gameObject.SetActive (true);
 				InsertNewRoom (gridElement.xPosition + 1, gridElement.yPosition);
+				gridElement.GetComponent<Room> ().eastDoor = true;
 			}
 		}
 //
 		if (Random.value < .5f) {
 			if (matrix.CanInsertAtPosition (gridElement.xPosition - 1, gridElement.yPosition)) {
+				gridElement.GetComponent<Room> ().westDoor = true;
 				gridElement.transform.Find ("Doors").Find ("Left").gameObject.SetActive (true);
 				InsertNewRoom (gridElement.xPosition - 1, gridElement.yPosition);
 			}
@@ -67,7 +71,7 @@ public class Map : MonoBehaviour {
 	GameObject InsertNewRoom(int x, int y){
 		Vector3 newPosition = matrix.PositionToCoordinate (x, y);
 
-		GameObject panel = Instantiate (Resources.Load ("Panel"), newPosition, Quaternion.identity) as GameObject;
+		GameObject panel = Instantiate (Resources.Load ("Room"), newPosition, Quaternion.identity) as GameObject;
 
 		GetComponent<GFRectGrid>().AlignTransform(panel.transform);
 
