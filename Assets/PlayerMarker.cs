@@ -17,58 +17,33 @@ public class PlayerMarker : MonoBehaviour {
 	
 	}
 
-	public void MoveUp(){
-		Room destination = matrix.RoomAt(xPosition, yPosition + 1);
+	void MoveSomewhere(int xOffset, int yOffset){
+		Room destination = matrix.RoomAt(xPosition + xOffset, yPosition + yOffset);
 		if(destination != null){
 			Room origin = matrix.RoomAt (xPosition, yPosition);
-			if (origin.northDoor || destination.southDoor) {
-				GameObject room = matrix.ElementAtArrayPosition (xPosition, yPosition + 1);
+			if (origin.DoorAt(xOffset, yOffset) || destination.DoorAt(xOffset * -1, yOffset * -1)) {
+				GameObject room = matrix.ElementAtArrayPosition (xPosition + xOffset, yPosition + yOffset);
 				transform.position = room.transform.position;
 				matrix.grid.AlignTransform (transform);
-				yPosition += 1;
+				xPosition += xOffset;
+				yPosition += yOffset;
 			}
 		}
+	}
+
+	public void MoveUp(){
+		MoveSomewhere (0, 1);
 	}
 
 	public void MoveLeft(){
-		Room destination = matrix.RoomAt(xPosition - 1, yPosition);
-		if(destination != null){
-			Room origin = matrix.RoomAt (xPosition, yPosition);
-			if (origin.westDoor || destination.eastDoor) {
-				GameObject room = matrix.ElementAtArrayPosition (xPosition - 1, yPosition);
-				transform.position = room.transform.position;
-				matrix.grid.AlignTransform (transform);
-				xPosition -= 1;
-			}
-		}
+		MoveSomewhere (-1, 0);
 	}
 
 	public void MoveDown(){
-		Room destination = matrix.RoomAt (xPosition, yPosition - 1);
-
-		if(destination != null){
-			Room origin = matrix.RoomAt (xPosition, yPosition);
-			if (origin.southDoor || destination.northDoor) {
-				GameObject room = matrix.ElementAtArrayPosition (xPosition, yPosition - 1);
-				transform.position = room.transform.position;
-				matrix.grid.AlignTransform (transform);
-				yPosition -= 1;
-			}
-		}
+		MoveSomewhere (0, -1);
 	}
 
 	public void MoveRight(){
-		Room destination = matrix.RoomAt (xPosition + 1, yPosition);
-
-		if(destination != null){
-			Room origin = matrix.RoomAt (xPosition, yPosition);
-
-			if (origin.eastDoor || destination.westDoor) {
-				GameObject room = matrix.ElementAtArrayPosition (xPosition + 1, yPosition);
-				transform.position = room.transform.position;
-				matrix.grid.AlignTransform (transform);
-				xPosition += 1;
-			}
-		}
+		MoveSomewhere (1, 0);
 	}
 }
