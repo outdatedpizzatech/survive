@@ -23,20 +23,32 @@ public class Map : MonoBehaviour {
 	}
 
 	void PopulateNeighbors (GridElement gridElement){
-		if(matrix.CanInsertAtPosition(gridElement.xPosition, gridElement.yPosition + 1)){
-			InsertNewRoom (gridElement.xPosition, gridElement.yPosition + 1);
+		if (Random.value < .5f) {
+			if (matrix.CanInsertAtPosition (gridElement.xPosition, gridElement.yPosition + 1)) {
+				gridElement.transform.Find ("Doors").Find ("Top").gameObject.SetActive (true);
+				InsertNewRoom (gridElement.xPosition, gridElement.yPosition + 1);
+			}
 		}
 
-		if(matrix.CanInsertAtPosition(gridElement.xPosition, gridElement.yPosition - 1)){
-			InsertNewRoom (gridElement.xPosition, gridElement.yPosition - 1);
+		if (Random.value < .5f) {
+			if (matrix.CanInsertAtPosition (gridElement.xPosition, gridElement.yPosition - 1)) {
+				gridElement.transform.Find ("Doors").Find ("Bottom").gameObject.SetActive (true);
+				InsertNewRoom (gridElement.xPosition, gridElement.yPosition - 1);
+			}
 		}
 
-		if(matrix.CanInsertAtPosition(gridElement.xPosition + 1, gridElement.yPosition)){
-			InsertNewRoom (gridElement.xPosition + 1, gridElement.yPosition);
+		if (Random.value < .5f) {
+			if (matrix.CanInsertAtPosition (gridElement.xPosition + 1, gridElement.yPosition)) {
+				gridElement.transform.Find ("Doors").Find ("Right").gameObject.SetActive (true);
+				InsertNewRoom (gridElement.xPosition + 1, gridElement.yPosition);
+			}
 		}
 //
-		if(matrix.CanInsertAtPosition(gridElement.xPosition - 1, gridElement.yPosition)){
-			InsertNewRoom (gridElement.xPosition - 1, gridElement.yPosition);
+		if (Random.value < .5f) {
+			if (matrix.CanInsertAtPosition (gridElement.xPosition - 1, gridElement.yPosition)) {
+				gridElement.transform.Find ("Doors").Find ("Left").gameObject.SetActive (true);
+				InsertNewRoom (gridElement.xPosition - 1, gridElement.yPosition);
+			}
 		}
 	}
 	
