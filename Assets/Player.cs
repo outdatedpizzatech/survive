@@ -4,11 +4,12 @@ using System.Collections;
 public class Player : MonoBehaviour {
 
 	public int health;
+	public int maxHealth = 20;
 	public static Player instance;
 
 	// Use this for initialization
 	void Start () {
-		health = 100;
+		health = maxHealth;
 		instance = this;
 	}
 	
