@@ -53,6 +53,7 @@ public class SpeechBubble : MonoBehaviour {
 	public void Activate(){
 		inFreezeState = freezesGameOnDisplay;
 		gameObject.SetActive (true);
+		GameController.Freeze ();
 	}
 	
 	// Update is called once per frame
