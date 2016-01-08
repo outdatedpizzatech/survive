@@ -4,7 +4,7 @@ using System.Collections;
 public class Player : MonoBehaviour {
 
 	public int health;
-	public int maxHealth = 20;
+	public int maxHealth;
 	public static Player instance;
 
 	// Use this for initialization

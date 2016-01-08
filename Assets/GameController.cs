@@ -36,12 +36,12 @@ public class GameController : MonoBehaviour {
 	}
 
 
-	public static void EnterEncounter(){
+	public static void EnterEncounter(Room room){
 		print ("entered encounter");
 		inEncounter = true;
 		GameObject.Find ("Combat").GetComponent<Canvas>().enabled = true;
 		GameObject.Find ("Navigation").GetComponent<Canvas>().enabled = false;
-		BattleController.StartBattle ();
+		BattleController.StartBattle (room);
 	}
 
 	public static void ExitEncounter(){

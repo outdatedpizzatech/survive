@@ -32,16 +32,16 @@ public class PlayerMarker : MonoBehaviour {
 					SpeechBubble.mainBubble.Activate ();
 					SpeechBubble.mainBubble.textToDisplay = destination.messages;
 
-					if (destination.encounter) {
-						StartEncounter ();
+					if (destination.enemies.Count > 0) {
+						StartEncounter (destination);
 					}
 				}
 			}
 		}
 	}
 
-	public void StartEncounter(){
-		GameController.EnterEncounter ();
+	public void StartEncounter(Room room){
+		GameController.EnterEncounter (room);
 	}
 
 	public void MoveUp(){

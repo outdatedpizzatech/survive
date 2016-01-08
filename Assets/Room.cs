@@ -7,13 +7,12 @@ public class Room : MonoBehaviour {
 	public bool eastDoor;
 	public bool westDoor;
 	public string[] messages;
-	public bool encounter = false;
+	public ArrayList enemies;
 
 	// Use this for initialization
 	void Start () {
+		enemies = new ArrayList();
 		float randomValue = Random.value;
-
-
 
 		if (randomValue < .1f) {
 			messages = new string[] { "it sure is creepy in here" };
@@ -26,7 +25,13 @@ public class Room : MonoBehaviour {
 		}
 
 		if (randomValue < .5f) {
-			encounter = true;
+			GameObject enemyObject = Instantiate (Resources.Load ("Corgi"), Vector3.zero, Quaternion.identity) as GameObject;
+			enemyObject.GetComponent<Corgi> ().room = this;
+			enemies.Add (enemyObject);
+
+			foreach (GameObject enemy in enemies) {
+				enemy.transform.Find ("Body").GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 0);
+			}
 		}
 
 		SpeechBubble.mainBubble.textToDisplay = messages;

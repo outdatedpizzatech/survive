@@ -4,14 +4,15 @@ using System.Collections;
 public class Corgi : MonoBehaviour {
 
 	public int health;
+	public Room room;
 
 	// Use this for initialization
 	void Start () {
-		health = 50;
+		health = 10;
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+
+	public void DestroyMe(){
+		room.enemies.Remove (gameObject);
+		Destroy (gameObject);
 	}
 }

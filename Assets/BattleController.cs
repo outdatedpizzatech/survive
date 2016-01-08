@@ -18,7 +18,8 @@ public class BattleController : MonoBehaviour {
 			if (instance.enemy.GetComponent<Corgi> ().health < 1) {
 				SpeechBubble.mainBubble.Activate ();
 				SpeechBubble.AddMessage ("thou hast slain the corgi");
-				Destroy (enemy);
+				instance.enemy.GetComponent<Corgi> ().DestroyMe ();
+				GameController.ExitEncounter ();
 			} else {
 				int damage = Random.Range (1, 10);
 				Player.instance.health -= damage;
@@ -30,10 +31,13 @@ public class BattleController : MonoBehaviour {
 		}
 	}
 
-	public static void StartBattle(){
-		instance.enemy = Instantiate (Resources.Load ("Corgi"), Vector3.zero, Quaternion.identity) as GameObject;
+	public static void StartBattle(Room room){
+		instance.enemy = (GameObject)room.enemies[0];
 		SpeechBubble.AddMessage ("You encounter a corgi!");
 		instance.moveFinished = false;
+		foreach (GameObject enemy in room.enemies) {
+			enemy.transform.Find ("Body").GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
+		}
 	}
 
 	public void Attack(){
