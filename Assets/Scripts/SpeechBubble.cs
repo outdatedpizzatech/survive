@@ -47,7 +47,8 @@ public class SpeechBubble : MonoBehaviour {
 		print ("arrow! " + arrow);
 		inFreezeState = freezesGameOnDisplay;
 		cursors = new ArrayList();
-//		if(isMainBubble) gameObject.SetActive (false);
+		if(isMainBubble) gameObject.SetActive (false);
+		textToDisplay = new string[] { };
 	}
 	
 	public void Activate(){

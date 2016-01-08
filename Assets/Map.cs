@@ -28,8 +28,6 @@ public class Map : MonoBehaviour {
 
 		PopulateNeighbors (gridElement);
 
-		SpeechBubble.mainBubble.Activate ();
-		SpeechBubble.mainBubble.textToDisplay = new string[] { "blah blah blah" };
 	}
 
 	void PopulateNeighbors (GridElement gridElement){

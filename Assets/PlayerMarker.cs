@@ -29,8 +29,10 @@ public class PlayerMarker : MonoBehaviour {
 					xPosition += xOffset;
 					yPosition += yOffset;
 
-					SpeechBubble.mainBubble.Activate ();
-					SpeechBubble.mainBubble.textToDisplay = destination.messages;
+					if (destination.messages.Length > 0) {
+						SpeechBubble.mainBubble.Activate ();
+						SpeechBubble.mainBubble.textToDisplay = destination.messages;
+					}
 
 					if (destination.enemies.Count > 0) {
 						StartEncounter (destination);

@@ -32,6 +32,7 @@ public class BattleController : MonoBehaviour {
 	}
 
 	public static void StartBattle(Room room){
+		SpeechBubble.mainBubble.Activate ();
 		instance.enemy = (GameObject)room.enemies[0];
 		SpeechBubble.AddMessage ("You encounter a corgi!");
 		instance.moveFinished = false;

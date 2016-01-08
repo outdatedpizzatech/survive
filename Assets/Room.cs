@@ -14,15 +14,15 @@ public class Room : MonoBehaviour {
 		enemies = new ArrayList();
 		float randomValue = Random.value;
 
-		if (randomValue < .1f) {
-			messages = new string[] { "it sure is creepy in here" };
-		} else if (randomValue < .2f) {
-			messages = new string[] { "you want to leave!" };
-		} else if (randomValue < .6f) {
-			messages = new string[] { "don't go there!!!" };
-		}else{
-			messages = new string[] { "dont die", "or do" };
-		}
+//		if (randomValue < .1f) {
+//			messages = new string[] { "it sure is creepy in here" };
+//		} else if (randomValue < .2f) {
+//			messages = new string[] { "you want to leave!" };
+//		} else if (randomValue < .6f) {
+//			messages = new string[] { "don't go there!!!" };
+//		}else{
+//			messages = new string[] { "dont die", "or do" };
+//		}
 
 		if (randomValue < .5f) {
 			GameObject enemyObject = Instantiate (Resources.Load ("Corgi"), Vector3.zero, Quaternion.identity) as GameObject;
@@ -34,7 +34,7 @@ public class Room : MonoBehaviour {
 			}
 		}
 
-		SpeechBubble.mainBubble.textToDisplay = messages;
+//		SpeechBubble.mainBubble.textToDisplay = messages;
 	}
 	
 	// Update is called once per frame
