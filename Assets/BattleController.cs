@@ -52,4 +52,25 @@ public class BattleController : MonoBehaviour {
 		}
 	}
 
+	public void Heal(){
+		if (!moveFinished && !GameController.frozen) {
+			SpeechBubble.mainBubble.Activate ();
+			int damage = Random.Range (10, 20);
+			Player.instance.health += damage;
+			SpeechBubble.AddMessage ("you heal for " + damage + "!");
+			moveFinished = true;
+		}
+	}
+
+	public void Fire(){
+		if (!moveFinished && !GameController.frozen) {
+			SpeechBubble.mainBubble.Activate ();
+			int damage = Random.Range (10, 20);
+			instance.enemy.GetComponent<Corgi> ().health -= damage;
+			SpeechBubble.AddMessage ("you cast fire!");
+			SpeechBubble.AddMessage ("corgi sustains " + damage + " damage");
+			moveFinished = true;
+		}
+	}
+
 }
