@@ -8,6 +8,8 @@ public class Room : MonoBehaviour {
 	public bool westDoor;
 	public string[] messages;
 	public ArrayList enemies;
+	public ArrayList fieldObjects;
+
 
 	// Use this for initialization
 	void Start () {
@@ -33,6 +35,14 @@ public class Room : MonoBehaviour {
 				enemy.transform.Find ("Body").GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 0);
 			}
 		}
+
+		randomValue = Random.value;
+
+//		if (randomValue < .25f) {
+//			GameObject fieldObject = Instantiate (Resources.Load ("Bomb"), Vector3.zero, Quaternion.identity) as GameObject;
+//			fieldObject.GetComponent<Bomb> ().room = this;
+//			fieldObjects.Add (fieldObject);
+//		}
 
 //		SpeechBubble.mainBubble.textToDisplay = messages;
 	}
