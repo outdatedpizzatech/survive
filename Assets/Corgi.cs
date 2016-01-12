@@ -19,4 +19,12 @@ public class Corgi : MonoBehaviour, IAttackable {
 	public void ReceiveHit(int damage, DamageTypes damageType){
 		health -= damage;
 	}
+
+	public string Name(){
+		return("Corgi-sama");
+	}
+
+	public int Health(){
+		return(health);
+	}
 }

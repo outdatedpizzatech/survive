@@ -16,7 +16,19 @@ public class Bomb : MonoBehaviour, IAttackable {
 	
 	}
 
+	public void DestroyMe(){
+		Destroy (gameObject);
+	}
+
 	public void ReceiveHit(int damage, DamageTypes damageType){
 		health -= damage;
+	}
+
+	public string Name(){
+		return("da bomb");
+	}
+
+	public int Health(){
+		return(health);
 	}
 }
