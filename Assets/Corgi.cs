@@ -27,4 +27,14 @@ public class Corgi : MonoBehaviour, IAttackable {
 	public int Health(){
 		return(health);
 	}
+
+	public void Test(){
+		print ("test");
+	}
+
+	void OnMouseDown() {
+		GameObject.Find ("Combat").GetComponent<Canvas>().enabled = true;
+		Transform menuTransform = CombatMenu.instance.transform;
+		menuTransform.position = Camera.main.WorldToScreenPoint (transform.position);
+	}
 }

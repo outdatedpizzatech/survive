@@ -44,7 +44,6 @@ public class SpeechBubble : MonoBehaviour {
 		GameObject speech = GameObject.Find ("Speech");
 		transform.parent = speech.transform;
 		arrow = transform.Find ("Arrow").gameObject;
-		print ("arrow! " + arrow);
 		inFreezeState = freezesGameOnDisplay;
 		cursors = new ArrayList();
 		if(isMainBubble) gameObject.SetActive (false);
@@ -109,7 +108,6 @@ public class SpeechBubble : MonoBehaviour {
 	}
 	
 	public void DismissMe(){
-		print ("dismissable: " + dismissable);
 		if(dismissable && Finished()){
 			textIndex = 0;
 			textBubbleIndex = 0;
@@ -129,7 +127,6 @@ public class SpeechBubble : MonoBehaviour {
 	}
 	
 	public void AdvanceMe(){
-		print ("advancing!" + Finished());
 		if(Finished()){
 			DismissMe ();
 		}else if(DoneWithPage ()){

@@ -32,7 +32,7 @@ public class Room : MonoBehaviour {
 			enemies.Add (enemyObject);
 
 			foreach (GameObject enemy in enemies) {
-				enemy.transform.Find ("Body").GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 0);
+				enemy.transform.position = GameObject.Find("Bin").transform.position;
 			}
 		}
 

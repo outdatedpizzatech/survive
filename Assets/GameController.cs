@@ -37,9 +37,7 @@ public class GameController : MonoBehaviour {
 
 
 	public static void EnterEncounter(Room room){
-		print ("entered encounter");
 		inEncounter = true;
-		GameObject.Find ("Combat").GetComponent<Canvas>().enabled = true;
 		GameObject.Find ("Navigation").GetComponent<Canvas>().enabled = false;
 		BattleController.StartBattle (room);
 	}
@@ -49,5 +47,10 @@ public class GameController : MonoBehaviour {
 
 		GameObject.Find ("Combat").GetComponent<Canvas>().enabled = false;
 		GameObject.Find ("Navigation").GetComponent<Canvas>().enabled = true;
+	}
+
+
+	public void Test(){
+		print ("test");
 	}
 }

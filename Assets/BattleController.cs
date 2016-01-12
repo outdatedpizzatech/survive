@@ -39,7 +39,7 @@ public class BattleController : MonoBehaviour {
 		SpeechBubble.AddMessage ("You encounter " + attackable.Name());
 		instance.moveFinished = false;
 		foreach (GameObject enemy in room.enemies) {
-			enemy.transform.Find ("Body").GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
+			enemy.transform.position = Vector3.zero;
 		}
 	}
 
