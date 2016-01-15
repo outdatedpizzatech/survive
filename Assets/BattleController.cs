@@ -47,7 +47,7 @@ public class BattleController : MonoBehaviour {
 		if (!moveFinished && !GameController.frozen) {
 			SpeechBubble.mainBubble.Activate ();
 			int damage = Random.Range (1, 10);
-			IAttackable attackable = instance.enemy.GetComponent(typeof(IAttackable)) as IAttackable;
+			IAttackable attackable = Target().GetComponent(typeof(IAttackable)) as IAttackable;
 
 			attackable.ReceiveHit (damage, DamageTypes.Physical);
 			SpeechBubble.AddMessage ("you attack!");
@@ -73,12 +73,16 @@ public class BattleController : MonoBehaviour {
 			SpeechBubble.mainBubble.Activate ();
 			int damage = Random.Range (10, 20);
 			SpeechBubble.AddMessage ("you cast fire!");
-			IAttackable attackable = instance.enemy.GetComponent(typeof(IAttackable)) as IAttackable;
+			IAttackable attackable = Target().GetComponent(typeof(IAttackable)) as IAttackable;
 
 			attackable.ReceiveHit (damage, DamageTypes.Fire);
 			SpeechBubble.AddMessage (attackable.Name() + " sustains " + damage + " damage");
 			moveFinished = true;
 		}
+	}
+
+	public GameObject Target(){
+		return(GameObject.Find ("Combat").transform.Find ("CombatMenu").GetComponent<CombatMenu> ().target);
 	}
 
 }
