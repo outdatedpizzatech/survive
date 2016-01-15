@@ -31,4 +31,12 @@ public class Bomb : MonoBehaviour, IAttackable {
 	public int Health(){
 		return(health);
 	}
+
+
+	void OnMouseDown() {
+		GameObject.Find ("Combat").GetComponent<Canvas>().enabled = true;
+		GameObject.Find ("Combat").transform.Find ("CombatMenu").GetComponent<CombatMenu> ().target = gameObject;
+		Transform menuTransform = CombatMenu.instance.transform;
+		menuTransform.position = Camera.main.WorldToScreenPoint (transform.position);
+	}
 }

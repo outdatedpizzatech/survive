@@ -41,6 +41,9 @@ public class BattleController : MonoBehaviour {
 		foreach (GameObject enemy in room.enemies) {
 			enemy.transform.position = Vector3.zero;
 		}
+		foreach (GameObject fieldObject in room.fieldObjects) {
+			fieldObject.transform.position = new Vector3 (2, 0, 0);
+		}
 	}
 
 	public void Attack(){

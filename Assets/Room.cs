@@ -13,6 +13,7 @@ public class Room : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		fieldObjects = new ArrayList ();
 		enemies = new ArrayList();
 		float randomValue = Random.value;
 
@@ -34,15 +35,17 @@ public class Room : MonoBehaviour {
 			foreach (GameObject enemy in enemies) {
 				enemy.transform.position = GameObject.Find("Bin").transform.position;
 			}
+
+			if (randomValue < 1f) {
+				GameObject fieldObject = Instantiate (Resources.Load ("Bomb"), GameObject.Find("Bin").transform.position, Quaternion.identity) as GameObject;
+				fieldObject.GetComponent<Bomb> ().room = this;
+				fieldObjects.Add (fieldObject);
+			}
 		}
 
 		randomValue = Random.value;
 
-//		if (randomValue < .25f) {
-//			GameObject fieldObject = Instantiate (Resources.Load ("Bomb"), Vector3.zero, Quaternion.identity) as GameObject;
-//			fieldObject.GetComponent<Bomb> ().room = this;
-//			fieldObjects.Add (fieldObject);
-//		}
+
 
 //		SpeechBubble.mainBubble.textToDisplay = messages;
 	}
