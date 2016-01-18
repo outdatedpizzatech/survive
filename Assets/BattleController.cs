@@ -64,8 +64,10 @@ public class BattleController : MonoBehaviour {
 			Player.instance.magic -= 1;
 			SpeechBubble.mainBubble.Activate ();
 			int damage = Random.Range (10, 20);
-			Player.instance.health += damage;
-			SpeechBubble.AddMessage ("you heal for " + damage + "!");
+			IAttackable attackable = Target().GetComponent(typeof(IAttackable)) as IAttackable;
+
+			attackable.ReceiveHit (-damage, DamageTypes.Physical);
+			SpeechBubble.AddMessage ("you heal " + attackable.Name() +  " for " + damage + "!");
 			moveFinished = true;
 		}
 	}
