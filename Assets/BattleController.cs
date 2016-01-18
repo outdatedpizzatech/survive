@@ -5,7 +5,7 @@ public class BattleController : MonoBehaviour {
 
 	public GameObject enemy;
 	public static BattleController instance;
-	public bool moveFinished = false;
+	public static bool inCombat;
 
 	// Use this for initialization
 	void Start () {
@@ -14,12 +14,13 @@ public class BattleController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (moveFinished && !GameController.frozen) {
+		if (!Player.turnAvailable && !GameController.frozen) {
 			IAttackable attackable = instance.enemy.GetComponent(typeof(IAttackable)) as IAttackable;
 			if (attackable.Health() < 1) {
 				SpeechBubble.mainBubble.Activate ();
 				SpeechBubble.AddMessage ("thou hast slain " + attackable.Name());
 				attackable.DestroyMe ();
+				BattleController.inCombat = false;
 				GameController.ExitEncounter ();
 			} else {
 				int damage = Random.Range (1, 10);
@@ -28,16 +29,17 @@ public class BattleController : MonoBehaviour {
 				SpeechBubble.AddMessage (attackable.Name() + " bites!");
 				SpeechBubble.AddMessage ("thy hits decreased by " + damage);
 			}
-			moveFinished = false;
+			Player.turnAvailable = true;
 		}
 	}
 
 	public static void StartBattle(Room room){
+		inCombat = true;
 		SpeechBubble.mainBubble.Activate ();
 		instance.enemy = (GameObject)room.enemies[0];
 		IAttackable attackable = instance.enemy.GetComponent(typeof(IAttackable)) as IAttackable;
 		SpeechBubble.AddMessage ("You encounter " + attackable.Name());
-		instance.moveFinished = false;
+		Player.turnAvailable = true;
 		foreach (GameObject enemy in room.enemies) {
 			enemy.transform.position = Vector3.zero;
 		}
@@ -46,48 +48,5 @@ public class BattleController : MonoBehaviour {
 		}
 	}
 
-	public void Attack(){
-		if (!moveFinished && !GameController.frozen) {
-			SpeechBubble.mainBubble.Activate ();
-			int damage = Random.Range (1, 10);
-			IAttackable attackable = Target().GetComponent(typeof(IAttackable)) as IAttackable;
-
-			attackable.ReceiveHit (damage, DamageTypes.Physical);
-			SpeechBubble.AddMessage ("you attack!");
-			SpeechBubble.AddMessage (attackable.Name() + " sustains " + damage + " damage");
-			moveFinished = true;
-		}
-	}
-
-	public void Heal(){
-		if (!moveFinished && !GameController.frozen && Player.instance.magic > 0) {
-			Player.instance.magic -= 1;
-			SpeechBubble.mainBubble.Activate ();
-			int damage = Random.Range (10, 20);
-			IAttackable attackable = Target().GetComponent(typeof(IAttackable)) as IAttackable;
-
-			attackable.ReceiveHit (-damage, DamageTypes.Physical);
-			SpeechBubble.AddMessage ("you heal " + attackable.Name() +  " for " + damage + "!");
-			moveFinished = true;
-		}
-	}
-
-	public void Fire(){
-		if (!moveFinished && !GameController.frozen && Player.instance.magic > 0) {
-			Player.instance.magic -= 1;
-			SpeechBubble.mainBubble.Activate ();
-			int damage = Random.Range (10, 20);
-			SpeechBubble.AddMessage ("you cast fire!");
-			IAttackable attackable = Target().GetComponent(typeof(IAttackable)) as IAttackable;
-
-			attackable.ReceiveHit (damage, DamageTypes.Fire);
-			SpeechBubble.AddMessage (attackable.Name() + " sustains " + damage + " damage");
-			moveFinished = true;
-		}
-	}
-
-	public GameObject Target(){
-		return(GameObject.Find ("Combat").transform.Find ("CombatMenu").GetComponent<CombatMenu> ().target);
-	}
 
 }
