@@ -40,11 +40,11 @@ public class BattleController : MonoBehaviour {
 		IAttackable attackable = instance.enemy.GetComponent(typeof(IAttackable)) as IAttackable;
 		SpeechBubble.AddMessage ("You encounter " + attackable.Name());
 		Player.turnAvailable = true;
+		foreach (GameObject fieldObject in room.fieldObjects) {
+			if(fieldObject != Player.instance.gameObject) fieldObject.transform.position = new Vector3 (2, 0, 0);
+		}
 		foreach (GameObject enemy in room.enemies) {
 			enemy.transform.position = Vector3.zero;
-		}
-		foreach (GameObject fieldObject in room.fieldObjects) {
-			fieldObject.transform.position = new Vector3 (2, 0, 0);
 		}
 	}
 

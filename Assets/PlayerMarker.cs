@@ -28,6 +28,8 @@ public class PlayerMarker : MonoBehaviour {
 					matrix.grid.AlignTransform (transform);
 					xPosition += xOffset;
 					yPosition += yOffset;
+					origin.RemoveObject (Player.instance.gameObject);
+					destination.AddObject (Player.instance.gameObject);
 
 					if (destination.messages.Length > 0) {
 						SpeechBubble.mainBubble.Activate ();

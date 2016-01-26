@@ -3,8 +3,9 @@ using System.Collections;
 
 public class Bomb : MonoBehaviour, IAttackable {
 
-	public int health;
+	public int health = 1;
 	public Room room;
+
 
 	// Use this for initialization
 	void Start () {
@@ -22,6 +23,21 @@ public class Bomb : MonoBehaviour, IAttackable {
 
 	public void ReceiveHit(int damage, DamageTypes damageType){
 		health -= damage;
+		if(damageType == DamageTypes.Fire){
+			Explode ();
+		}
+	}
+
+	void Explode(){
+		SpeechBubble.AddMessage ("the bomb explodes!");
+		foreach(GameObject item in room.fieldObjects){
+			if (item != gameObject) {
+				IAttackable attackable = item.GetComponent (typeof(IAttackable)) as IAttackable;
+				SpeechBubble.AddMessage (attackable.Name () + " receives 20 damage");
+				attackable.ReceiveHit (20, DamageTypes.Fire);
+			}
+		}
+		DestroyMe ();
 	}
 
 	public string Name(){

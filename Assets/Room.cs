@@ -31,6 +31,7 @@ public class Room : MonoBehaviour {
 			GameObject enemyObject = Instantiate (Resources.Load ("Corgi"), Vector3.zero, Quaternion.identity) as GameObject;
 			enemyObject.GetComponent<Corgi> ().room = this;
 			enemies.Add (enemyObject);
+			fieldObjects.Add (enemyObject);
 
 			foreach (GameObject enemy in enemies) {
 				enemy.transform.position = GameObject.Find("Bin").transform.position;
@@ -52,7 +53,7 @@ public class Room : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+
 	}
 
 	public bool DoorAt(int x, int y){
@@ -67,5 +68,13 @@ public class Room : MonoBehaviour {
 		}else{
 			return(false);
 		}
+	}
+
+	public void RemoveObject(GameObject fieldObject){
+		fieldObjects.Remove (fieldObject);
+	}
+
+	public void AddObject(GameObject fieldObject){
+		fieldObjects.Add (fieldObject);
 	}
 }

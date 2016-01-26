@@ -13,6 +13,7 @@ public class Corgi : MonoBehaviour, IAttackable {
 
 	public void DestroyMe(){
 		room.enemies.Remove (gameObject);
+		room.RemoveObject (gameObject);
 		Destroy (gameObject);
 	}
 
