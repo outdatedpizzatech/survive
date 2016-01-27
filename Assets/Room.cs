@@ -36,12 +36,14 @@ public class Room : MonoBehaviour {
 			foreach (GameObject enemy in enemies) {
 				enemy.transform.position = GameObject.Find("Bin").transform.position;
 			}
+		}
 
-			if (randomValue < 1f) {
-				GameObject fieldObject = Instantiate (Resources.Load ("Bomb"), GameObject.Find("Bin").transform.position, Quaternion.identity) as GameObject;
-				fieldObject.GetComponent<Bomb> ().room = this;
-				fieldObjects.Add (fieldObject);
-			}
+
+
+		if (randomValue < .8f) {
+			GameObject fieldObject = Instantiate (Resources.Load ("Bomb"), GameObject.Find("Bin").transform.position, Quaternion.identity) as GameObject;
+			fieldObject.GetComponent<Bomb> ().room = this;
+			fieldObjects.Add (fieldObject);
 		}
 
 		randomValue = Random.value;
