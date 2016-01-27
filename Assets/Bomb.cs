@@ -33,8 +33,9 @@ public class Bomb : MonoBehaviour, IAttackable {
 		foreach(GameObject item in room.fieldObjects){
 			if (item != gameObject) {
 				IAttackable attackable = item.GetComponent (typeof(IAttackable)) as IAttackable;
-				SpeechBubble.AddMessage (attackable.Name () + " receives 20 damage");
-				attackable.ReceiveHit (20, DamageTypes.Fire);
+				SpeechBubble.AddEvent (attackable, 20, DamageTypes.Fire);
+				SpeechBubble.AddMessage (attackable.Name () + " receives 20 damage", true);
+//				attackable.ReceiveHit (20, DamageTypes.Fire);
 			}
 		}
 		DestroyMe ();

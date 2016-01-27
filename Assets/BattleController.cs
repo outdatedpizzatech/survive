@@ -18,7 +18,7 @@ public class BattleController : MonoBehaviour {
 			IAttackable attackable = instance.enemy.GetComponent(typeof(IAttackable)) as IAttackable;
 			if (attackable.Health() < 1) {
 				SpeechBubble.mainBubble.Activate ();
-				SpeechBubble.AddMessage ("thou hast slain " + attackable.Name());
+				SpeechBubble.AddMessage ("thou hast slain " + attackable.Name(), false);
 				attackable.DestroyMe ();
 				BattleController.inCombat = false;
 				GameController.ExitEncounter ();
@@ -26,8 +26,8 @@ public class BattleController : MonoBehaviour {
 				int damage = Random.Range (1, 10);
 				Player.instance.health -= damage;
 				SpeechBubble.mainBubble.Activate ();
-				SpeechBubble.AddMessage (attackable.Name() + " bites!");
-				SpeechBubble.AddMessage ("thy hits decreased by " + damage);
+				SpeechBubble.AddMessage (attackable.Name() + " bites!", false);
+				SpeechBubble.AddMessage ("thy hits decreased by " + damage, false);
 			}
 			Player.turnAvailable = true;
 		}
@@ -38,7 +38,7 @@ public class BattleController : MonoBehaviour {
 		SpeechBubble.mainBubble.Activate ();
 		instance.enemy = (GameObject)room.enemies[0];
 		IAttackable attackable = instance.enemy.GetComponent(typeof(IAttackable)) as IAttackable;
-		SpeechBubble.AddMessage ("You encounter " + attackable.Name());
+		SpeechBubble.AddMessage ("You encounter " + attackable.Name(), false);
 		Player.turnAvailable = true;
 		foreach (GameObject fieldObject in room.fieldObjects) {
 			if(fieldObject != Player.instance.gameObject) fieldObject.transform.position = new Vector3 (2, 0, 0);

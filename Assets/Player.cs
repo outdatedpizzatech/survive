@@ -49,9 +49,9 @@ public class Player : MonoBehaviour, IAttackable {
 			int damage = Random.Range (1, 10);
 			IAttackable attackable = Target().GetComponent(typeof(IAttackable)) as IAttackable;
 
-			attackable.ReceiveHit (damage, DamageTypes.Physical);
 			SpeechBubble.AddMessage ("you attack!");
-			SpeechBubble.AddMessage (attackable.Name() + " sustains " + damage + " damage");
+			SpeechBubble.AddEvent (attackable, damage, DamageTypes.Physical);
+			SpeechBubble.AddMessage (attackable.Name() + " sustains " + damage + " damage", true);
 			if(BattleController.inCombat) turnAvailable = false;
 		}
 	}
@@ -63,8 +63,8 @@ public class Player : MonoBehaviour, IAttackable {
 			int damage = Random.Range (10, 20);
 			IAttackable attackable = Target().GetComponent(typeof(IAttackable)) as IAttackable;
 
-			attackable.ReceiveHit (-damage, DamageTypes.Physical);
-			SpeechBubble.AddMessage ("you heal " + attackable.Name() +  " for " + damage + "!");
+			SpeechBubble.AddEvent (attackable, -damage, DamageTypes.Physical);
+			SpeechBubble.AddMessage ("you heal " + attackable.Name() +  " for " + damage + "!", true);
 			if(BattleController.inCombat) turnAvailable = false;
 		}
 	}
@@ -77,8 +77,8 @@ public class Player : MonoBehaviour, IAttackable {
 			SpeechBubble.AddMessage ("you cast fire!");
 			IAttackable attackable = Target().GetComponent(typeof(IAttackable)) as IAttackable;
 
-			attackable.ReceiveHit (damage, DamageTypes.Fire);
-			SpeechBubble.AddMessage (attackable.Name() + " sustains " + damage + " damage");
+			SpeechBubble.AddEvent (attackable, damage, DamageTypes.Fire);
+			SpeechBubble.AddMessage (attackable.Name() + " sustains " + damage + " damage", true);
 			if(BattleController.inCombat) turnAvailable = false;
 		}
 	}

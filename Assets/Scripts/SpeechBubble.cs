@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.UI;
 using System;
 
@@ -7,6 +8,8 @@ public class SpeechBubble : MonoBehaviour {
 
 	[TextArea(3,10)]
 	public string[] textToDisplay;
+	public List<ActionEvent> actionEvents;
+	public bool[] hasEvents;
 	public float maxTimeBetweenCharacters;
 	public bool dismissable;
 	public bool dismissesSelf = false;
@@ -102,9 +105,23 @@ public class SpeechBubble : MonoBehaviour {
 		arrow.SetActive (DoneWithPage () && !Finished ());
 	}
 
-	public static void AddMessage(string message){
+	public static void AddEvent(IAttackable attackable, int damage, DamageTypes damageType){
+		ActionEvent actionEvent = new ActionEvent ();
+		actionEvent.attackable = attackable;
+		actionEvent.damage = damage;
+		actionEvent.damageType = damageType;
+		mainBubble.actionEvents.Add(actionEvent);
+	}
+
+	public static void AddMessage(string message, bool hasEvent){
 		Array.Resize (ref mainBubble.textToDisplay, mainBubble.textToDisplay.Length + 1);
+		Array.Resize (ref mainBubble.hasEvents, mainBubble.textToDisplay.Length + 1);
 		mainBubble.textToDisplay[mainBubble.textToDisplay.Length - 1] = message;
+		mainBubble.hasEvents[mainBubble.textToDisplay.Length - 1] = hasEvent;
+	}
+
+	public static void AddMessage(string message){
+		AddMessage (message, false);
 	}
 	
 	public void DismissMe(){
@@ -142,7 +159,20 @@ public class SpeechBubble : MonoBehaviour {
 		foreach(GameObject cursor in cursors){
 			Destroy (cursor);
 		}
+		ExecuteActionEvent ();
 		cursors.Clear ();
+	}
+
+	private void ExecuteActionEvent(){
+		if(hasEvents[textBubbleIndex]){
+			IAttackable attackable = ((ActionEvent)actionEvents[0]).attackable;
+			int damage = ((ActionEvent)actionEvents[0]).damage;
+			DamageTypes damageType = ((ActionEvent)actionEvents[0]).damageType;
+
+			attackable.ReceiveHit (damage, damageType);
+
+			actionEvents.RemoveAt (0);
+		}
 	}
 	
 	private bool DoneWithPage(){

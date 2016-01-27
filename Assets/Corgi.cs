@@ -18,6 +18,7 @@ public class Corgi : MonoBehaviour, IAttackable {
 	}
 
 	public void ReceiveHit(int damage, DamageTypes damageType){
+		print ("corgi is hit");
 		health -= damage;
 	}
 
