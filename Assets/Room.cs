@@ -77,4 +77,23 @@ public class Room : MonoBehaviour {
 	public void AddObject(GameObject fieldObject){
 		fieldObjects.Add (fieldObject);
 	}
+
+	public void EnterRoom(){
+		this.AddObject (Player.instance.gameObject);
+		foreach (GameObject fieldObject in this.fieldObjects) {
+			if(fieldObject != Player.instance.gameObject) fieldObject.transform.position = new Vector3 (2, 0, 0);
+		}
+		foreach (GameObject enemy in this.enemies) {
+			enemy.transform.position = Vector3.zero;
+		}
+
+
+	}
+
+	public void ExitRoom(){
+		this.RemoveObject (Player.instance.gameObject);
+		foreach (GameObject fieldObject in this.fieldObjects) {
+			if(fieldObject != Player.instance.gameObject) fieldObject.transform.position = GameObject.Find("Bin").transform.position;
+		}
+	}
 }
