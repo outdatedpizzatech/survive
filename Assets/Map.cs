@@ -73,6 +73,7 @@ public class Map : MonoBehaviour {
 		Vector3 newPosition = matrix.PositionToCoordinate (x, y);
 
 		GameObject panel = Instantiate (Resources.Load ("Room"), newPosition, Quaternion.identity) as GameObject;
+		panel.transform.parent = GameObject.Find ("Map").transform;
 
 		GetComponent<GFRectGrid>().AlignTransform(panel.transform);
 

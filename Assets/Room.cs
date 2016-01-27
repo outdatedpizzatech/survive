@@ -15,20 +15,11 @@ public class Room : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		gameObject.name = "Room " + Random.Range (0, 9999999).ToString ();
 		entities = new ArrayList ();
 		enemies = new ArrayList();
 		fieldObjects = new ArrayList();
 		float randomValue = Random.value;
-
-//		if (randomValue < .1f) {
-//			messages = new string[] { "it sure is creepy in here" };
-//		} else if (randomValue < .2f) {
-//			messages = new string[] { "you want to leave!" };
-//		} else if (randomValue < .6f) {
-//			messages = new string[] { "don't go there!!!" };
-//		}else{
-//			messages = new string[] { "dont die", "or do" };
-//		}
 
 		if (randomValue < .5f) {
 			AddEnemy ();
@@ -39,23 +30,18 @@ public class Room : MonoBehaviour {
 			}
 		}
 
-
-
 		if (randomValue < 1f) {
 			AddBomb ();
 			AddBomb ();
 		}
 
 		randomValue = Random.value;
-
-
-
-//		SpeechBubble.mainBubble.textToDisplay = messages;
 	}
 
 	void AddBomb(){
 		GameObject fieldObject = Instantiate (Resources.Load ("Bomb"), GameObject.Find("Bin").transform.position, Quaternion.identity) as GameObject;
 		fieldObject.GetComponent<Bomb> ().room = this;
+		fieldObject.transform.parent = transform.Find ("Entities");
 		entities.Add (fieldObject);
 		fieldObjects.Add (fieldObject);
 	}
@@ -63,6 +49,7 @@ public class Room : MonoBehaviour {
 	void AddEnemy(){
 		GameObject enemyObject = Instantiate (Resources.Load ("Corgi"), Vector3.zero, Quaternion.identity) as GameObject;
 		enemyObject.GetComponent<Corgi> ().room = this;
+		enemyObject.transform.parent = transform.Find ("Entities");
 		enemies.Add (enemyObject);
 		entities.Add (enemyObject);
 	}
@@ -88,10 +75,12 @@ public class Room : MonoBehaviour {
 
 	public void RemoveObject(GameObject fieldObject){
 		fieldObjects.Remove (fieldObject);
+		entities.Remove (fieldObject);
 	}
 
 	public void AddObject(GameObject fieldObject){
 		fieldObjects.Add (fieldObject);
+		entities.Add (fieldObject);
 	}
 
 	public void EnterRoom(){

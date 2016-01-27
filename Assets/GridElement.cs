@@ -44,7 +44,7 @@ public class GridElement : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		gameObject.name = Random.Range (0, 9999999).ToString ();
+		
 	}
 	
 //	public void InitializeColor(){
