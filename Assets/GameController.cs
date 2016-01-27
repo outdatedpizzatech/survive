@@ -40,6 +40,7 @@ public class GameController : MonoBehaviour {
 		inEncounter = true;
 		GameObject.Find ("Navigation").GetComponent<Canvas>().enabled = false;
 		BattleController.StartBattle (room);
+		UIController.HideMap ();
 	}
 
 	public static void ExitEncounter(){

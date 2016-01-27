@@ -71,6 +71,8 @@ public class Map : MonoBehaviour {
 
 	GameObject InsertNewRoom(int x, int y){
 		Vector3 newPosition = matrix.PositionToCoordinate (x, y);
+		Vector3 mapPosition = GameObject.Find ("Map").transform.position;
+		newPosition = new Vector3 (newPosition.x + mapPosition.x, newPosition.y + mapPosition.y, mapPosition.z);
 
 		GameObject panel = Instantiate (Resources.Load ("Room"), newPosition, Quaternion.identity) as GameObject;
 		panel.transform.parent = GameObject.Find ("Map").transform;

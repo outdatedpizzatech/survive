@@ -41,7 +41,7 @@ public class Room : MonoBehaviour {
 	void AddBomb(){
 		GameObject fieldObject = Instantiate (Resources.Load ("Bomb"), GameObject.Find("Bin").transform.position, Quaternion.identity) as GameObject;
 		fieldObject.GetComponent<Bomb> ().room = this;
-		fieldObject.transform.parent = transform.Find ("Entities");
+//		fieldObject.transform.parent = transform.Find ("Entities");
 		entities.Add (fieldObject);
 		fieldObjects.Add (fieldObject);
 	}
@@ -49,7 +49,7 @@ public class Room : MonoBehaviour {
 	void AddEnemy(){
 		GameObject enemyObject = Instantiate (Resources.Load ("Corgi"), Vector3.zero, Quaternion.identity) as GameObject;
 		enemyObject.GetComponent<Corgi> ().room = this;
-		enemyObject.transform.parent = transform.Find ("Entities");
+//		enemyObject.transform.parent = transform.Find ("Entities");
 		enemies.Add (enemyObject);
 		entities.Add (enemyObject);
 	}
