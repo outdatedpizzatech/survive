@@ -31,6 +31,8 @@ public class SpeechBubble : MonoBehaviour {
 	private GameObject arrow;
 //	private bool cursorStale;
 	private ArrayList cursors;
+	public bool done;
+	public Vector3 initialLocation;
 	
 	public static SpeechBubble mainBubble;
 	
@@ -38,9 +40,7 @@ public class SpeechBubble : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		if(isMainBubble) {
-			mainBubble = this;
-		}
+		mainBubble = this;
 		text = transform.Find ("Text").GetComponent<Text>();
 		text.text = "";
 		bubble = GetComponent<RectTransform>();
@@ -49,69 +49,57 @@ public class SpeechBubble : MonoBehaviour {
 		arrow = transform.Find ("Arrow").gameObject;
 		inFreezeState = freezesGameOnDisplay;
 		cursors = new ArrayList();
-		if(isMainBubble) gameObject.SetActive (false);
 		textToDisplay = new string[] { };
+		initialLocation = transform.position;
+		transform.position = new Vector3 (9999, 9999, 9999);
 	}
 	
 	public void Activate(){
 		inFreezeState = freezesGameOnDisplay;
-		gameObject.SetActive (true);
 		GameController.Freeze ();
+		transform.position = initialLocation;
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		print ("DONE: " + done);
 		currentTimeBetweenCharacters += Time.deltaTime;
-		if(currentTimeBetweenCharacters >= maxTimeBetweenCharacters && textIndex < textToDisplay[textBubbleIndex].Length){
-			GameController.Freeze ();
-			text.text += textToDisplay[textBubbleIndex][textIndex];
-			textIndex++;
-			currentTimeBetweenCharacters = 0;
-			if(!isMainBubble){
-				if(setWidth == 0 || setHeight == 0){
-					if(maxWidth < text.preferredWidth + 40) maxWidth = text.preferredWidth + 40;
-					if(maxHeight < text.preferredHeight + 30) maxHeight = text.preferredHeight + 30;
-				}else{
-					maxWidth = setWidth;
-					maxHeight = setHeight;
+		if (Initialized ()) {
+			transform.position = initialLocation;
+			if (currentTimeBetweenCharacters >= maxTimeBetweenCharacters && textIndex < textToDisplay [textBubbleIndex].Length) {
+				GameController.Freeze ();
+				done = false;
+				text.text += textToDisplay [textBubbleIndex] [textIndex];
+				textIndex++;
+				currentTimeBetweenCharacters = 0;
+				if (!isMainBubble) {
+					if (setWidth == 0 || setHeight == 0) {
+						if (maxWidth < text.preferredWidth + 40)
+							maxWidth = text.preferredWidth + 40;
+						if (maxHeight < text.preferredHeight + 30)
+							maxHeight = text.preferredHeight + 30;
+					} else {
+						maxWidth = setWidth;
+						maxHeight = setHeight;
+					}
+					bubble.sizeDelta = new Vector2 (maxWidth, maxHeight);
 				}
-				bubble.sizeDelta = new Vector2(maxWidth, maxHeight);
 			}
-		}
-//		if(!cursorStale && cursorInstructions != null && cursorInstructions.Length > textBubbleIndex){
-//			if(cursorInstructions[textBubbleIndex] != null){
-//				foreach(string friendlyName in cursorInstructions[textBubbleIndex]){
-//					GameObject cursorObject = Instantiate (Resources.Load ("Cursor"), Vector3.zero, Quaternion.identity) as GameObject;
-//					Cursor cursor = cursorObject.GetComponent<Cursor>();
-//					GridElement foundElement = GameController.GetElementByName(friendlyName);
-//					if(foundElement == null) throw new UnassignedReferenceException("no friendly object found for " + friendlyName);
-//					cursor.transform.position = Camera.main.WorldToScreenPoint(GameController.GetElementByName(friendlyName).transform.position);
-//					cursors.Add (cursor.gameObject);
-//				}
-//			}
-//			cursorStale = true;
-//		}
-		if(dismissesSelf && Finished ()){
-			if(currentPostFinishDelay > maxPostFinishDelay){
-				DismissMe();
-			}else{
-				currentPostFinishDelay += Time.deltaTime;		
+			if (dismissesSelf && Finished ()) {
+				if (currentPostFinishDelay > maxPostFinishDelay) {
+					DismissMe ();
+				} else {
+					currentPostFinishDelay += Time.deltaTime;		
+				}
 			}
+			UpdateArrow ();
 		}
-		UpdateArrow();
 	}
 	
 	void UpdateArrow(){
 		arrow.SetActive (DoneWithPage () && !Finished ());
 	}
 
-	public static void AddEvent(IAttackable attackable, int damage, DamageTypes damageType){
-		ActionEvent actionEvent = new ActionEvent ();
-		actionEvent.attackable = attackable;
-		actionEvent.damage = damage;
-		actionEvent.damageType = damageType;
-		mainBubble.actionEvents.Add(actionEvent);
-	}
 
 	public static void AddMessage(string message, bool hasEvent){
 		Array.Resize (ref mainBubble.textToDisplay, mainBubble.textToDisplay.Length + 1);
@@ -126,21 +114,17 @@ public class SpeechBubble : MonoBehaviour {
 	
 	public void DismissMe(){
 		if(dismissable && Finished()){
+			print ("dismissed!");
+			done = true;
 			textIndex = 0;
 			textBubbleIndex = 0;
 			text.text = "";
-//			foreach(GameObject cursor in cursors){
-//				Destroy (cursor);
-//			}
 			if(freezesGameOnDisplay) inFreezeState = false;
-			if(isMainBubble){
-				textToDisplay = new string[] {};
-				gameObject.SetActive(false);
-			}else{
-				Destroy (gameObject);
-			}
+			textToDisplay = new string[] {};
+			transform.position = new Vector3(9999, 9999, 9999);
 			GameController.Unfreeze ();
 		}
+		print ("dismissal event..");
 	}
 	
 	public void AdvanceMe(){
@@ -155,31 +139,20 @@ public class SpeechBubble : MonoBehaviour {
 		textIndex = 0;
 		textBubbleIndex++;
 		text.text = "";
-//		cursorStale = false;
 		foreach(GameObject cursor in cursors){
 			Destroy (cursor);
 		}
-		ExecuteActionEvent ();
 		cursors.Clear ();
-	}
-
-	private void ExecuteActionEvent(){
-		if(hasEvents[textBubbleIndex]){
-			IAttackable attackable = ((ActionEvent)actionEvents[0]).attackable;
-			int damage = ((ActionEvent)actionEvents[0]).damage;
-			DamageTypes damageType = ((ActionEvent)actionEvents[0]).damageType;
-
-			attackable.ReceiveHit (damage, damageType);
-
-			actionEvents.RemoveAt (0);
-		}
-	}
-	
+	}	
 	private bool DoneWithPage(){
 		return(textIndex >= textToDisplay[textBubbleIndex].Length);
 	}
 	
-	private bool Finished(){
+	public bool Finished(){
 		return(textBubbleIndex == (textToDisplay.Length - 1) && DoneWithPage ());
+	}
+
+	public bool Initialized(){
+		return(textToDisplay.Length > 0);
 	}
 }

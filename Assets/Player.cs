@@ -35,6 +35,7 @@ public class Player : MonoBehaviour, IAttackable {
 	}
 
 	public void ReceiveHit(int damage, DamageTypes damageType){
+		EventQueue.AddMessage ("you sustain " + damage + " damage");
 		health -= damage;
 	}
 
@@ -49,9 +50,8 @@ public class Player : MonoBehaviour, IAttackable {
 			int damage = Random.Range (1, 10);
 			IAttackable attackable = Target().GetComponent(typeof(IAttackable)) as IAttackable;
 
-			SpeechBubble.AddMessage ("you attack!");
-			SpeechBubble.AddEvent (attackable, damage, DamageTypes.Physical);
-			SpeechBubble.AddMessage (attackable.Name() + " sustains " + damage + " damage", true);
+			EventQueue.AddMessage ("you attack!");
+			EventQueue.AddEvent (attackable, damage, DamageTypes.Physical);
 			if(BattleController.inCombat) turnAvailable = false;
 		}
 	}
@@ -59,12 +59,11 @@ public class Player : MonoBehaviour, IAttackable {
 	public void Heal(){
 		if (turnAvailable && !GameController.frozen && Player.instance.magic > 0) {
 			Player.instance.magic -= 1;
-			SpeechBubble.mainBubble.Activate ();
 			int damage = Random.Range (10, 20);
+			EventQueue.AddMessage ("you cast heal!");
 			IAttackable attackable = Target().GetComponent(typeof(IAttackable)) as IAttackable;
 
-			SpeechBubble.AddEvent (attackable, -damage, DamageTypes.Physical);
-			SpeechBubble.AddMessage ("you heal " + attackable.Name() +  " for " + damage + "!", true);
+			EventQueue.AddEvent (attackable, -damage, DamageTypes.Physical);
 			if(BattleController.inCombat) turnAvailable = false;
 		}
 	}
@@ -74,11 +73,10 @@ public class Player : MonoBehaviour, IAttackable {
 			Player.instance.magic -= 1;
 			SpeechBubble.mainBubble.Activate ();
 			int damage = Random.Range (10, 20);
-			SpeechBubble.AddMessage ("you cast fire!");
+			EventQueue.AddMessage ("you cast fire!");
 			IAttackable attackable = Target().GetComponent(typeof(IAttackable)) as IAttackable;
 
-			SpeechBubble.AddEvent (attackable, damage, DamageTypes.Fire);
-			SpeechBubble.AddMessage (attackable.Name() + " sustains " + damage + " damage", true);
+			EventQueue.AddEvent (attackable, damage, DamageTypes.Fire);
 			if(BattleController.inCombat) turnAvailable = false;
 		}
 	}

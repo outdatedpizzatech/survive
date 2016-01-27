@@ -28,10 +28,8 @@ public class Room : MonoBehaviour {
 //		}
 
 		if (randomValue < .5f) {
-			GameObject enemyObject = Instantiate (Resources.Load ("Corgi"), Vector3.zero, Quaternion.identity) as GameObject;
-			enemyObject.GetComponent<Corgi> ().room = this;
-			enemies.Add (enemyObject);
-			fieldObjects.Add (enemyObject);
+			AddEnemy ();
+//			AddEnemy ();
 
 			foreach (GameObject enemy in enemies) {
 				enemy.transform.position = GameObject.Find("Bin").transform.position;
@@ -51,6 +49,13 @@ public class Room : MonoBehaviour {
 
 
 //		SpeechBubble.mainBubble.textToDisplay = messages;
+	}
+
+	void AddEnemy(){
+		GameObject enemyObject = Instantiate (Resources.Load ("Corgi"), Vector3.zero, Quaternion.identity) as GameObject;
+		enemyObject.GetComponent<Corgi> ().room = this;
+		enemies.Add (enemyObject);
+		fieldObjects.Add (enemyObject);
 	}
 	
 	// Update is called once per frame
