@@ -18,6 +18,7 @@ public class Bomb : MonoBehaviour, IAttackable {
 	}
 
 	public void DestroyMe(){
+		room.RemoveObject (gameObject);
 		Destroy (gameObject);
 	}
 
