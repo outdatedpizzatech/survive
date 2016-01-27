@@ -24,20 +24,21 @@ public class Bomb : MonoBehaviour, IAttackable {
 
 	public void ReceiveHit(int damage, DamageTypes damageType){
 		health -= damage;
+		int index = EventQueue.AddMessage ("the bomb receives damage");
 		if(damageType == DamageTypes.Fire){
-			Explode ();
+			Explode (index);
 		}
 	}
 
-	void Explode(){
-		EventQueue.AddMessage ("the bomb explodes!");
-		foreach(GameObject item in room.fieldObjects){
+	void Explode(int index){
+		index = EventQueue.AddMessage ("the bomb explodes!", index + 1);
+		EventQueue.AddDestroy (gameObject, index + 1);
+		foreach(GameObject item in room.AllEntities()){
 			if (item != gameObject) {
-				IAttackable attackable = item.GetComponent (typeof(IAttackable)) as IAttackable;
-				EventQueue.AddEvent (attackable, 20, DamageTypes.Fire);
+				EventQueue.AddEvent (item, 20, DamageTypes.Fire);
 			}
 		}
-		DestroyMe ();
+
 	}
 
 	public string Name(){

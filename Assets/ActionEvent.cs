@@ -3,7 +3,7 @@ using System.Collections;
 
 public class ActionEvent {
 
-	public IAttackable attackable;
+	public GameObject attackable;
 	public int damage;
 	public DamageTypes damageType;
 	public bool destroy;
@@ -14,10 +14,13 @@ public class ActionEvent {
 		if (text != null) {
 			SpeechBubble.AddMessage (text);
 		} else {
-			if (!destroy) {
-				attackable.ReceiveHit (damage, damageType);
-			} else {
-				attackable.DestroyMe ();
+			if (attackable != null) {
+				IAttackable v = attackable.GetComponent (typeof(IAttackable)) as IAttackable;
+				if (!destroy) {
+					v.ReceiveHit (damage, damageType);
+				} else {
+					v.DestroyMe ();
+				}
 			}
 
 		}

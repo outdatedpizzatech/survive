@@ -12,19 +12,20 @@ public class Corgi : MonoBehaviour, IAttackable {
 	}
 
 	public void DestroyMe(){
-		SpeechBubble.AddMessage (Name() + " is destroyed", true);
+		EventQueue.AddMessage (Name() + " is destroyed", 1);
 		room.enemies.Remove (gameObject);
 		room.RemoveObject (gameObject);
 		Destroy (gameObject);
 	}
 
 	public void ReceiveHit(int damage, DamageTypes damageType){
-		SpeechBubble.AddMessage (Name() + " surstains " + damage + " damage", true);
-		health -= damage;
+		if (gameObject != null) {
+			int index = EventQueue.AddMessage (Name () + " surstains " + damage + " damage");
+			health -= damage;
 
-		if (health < 1) {
-			IAttackable iAttackable = GetComponent (typeof(IAttackable)) as IAttackable;
-			EventQueue.AddDestroy (iAttackable);
+			if (health < 1) {
+				EventQueue.AddDestroy (gameObject, index + 1);
+			}
 		}
 	}
 
@@ -50,8 +51,7 @@ public class Corgi : MonoBehaviour, IAttackable {
 	public void DoAction(){
 		int damage = Random.Range (1, 10);
 		Player.instance.health -= damage;
-		SpeechBubble.mainBubble.Activate ();
-		SpeechBubble.AddMessage (Name() + " bites!", false);
-		SpeechBubble.AddMessage ("thy hits decreased by " + damage, false);
+		EventQueue.AddMessage (Name() + " bites!");
+		EventQueue.AddEvent (Player.instance.gameObject, damage, DamageTypes.Physical);
 	}
 }

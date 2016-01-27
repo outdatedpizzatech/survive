@@ -35,7 +35,8 @@ public class Player : MonoBehaviour, IAttackable {
 	}
 
 	public void ReceiveHit(int damage, DamageTypes damageType){
-		EventQueue.AddMessage ("you sustain " + damage + " damage");
+		print ("player receives hit");
+		EventQueue.AddMessage ("you sustain " + damage + " damage", 1);
 		health -= damage;
 	}
 
@@ -48,10 +49,8 @@ public class Player : MonoBehaviour, IAttackable {
 		if (turnAvailable && !GameController.frozen) {
 			SpeechBubble.mainBubble.Activate ();
 			int damage = Random.Range (1, 10);
-			IAttackable attackable = Target().GetComponent(typeof(IAttackable)) as IAttackable;
-
 			EventQueue.AddMessage ("you attack!");
-			EventQueue.AddEvent (attackable, damage, DamageTypes.Physical);
+			EventQueue.AddEvent (Target(), damage, DamageTypes.Physical);
 			if(BattleController.inCombat) turnAvailable = false;
 		}
 	}
@@ -61,9 +60,7 @@ public class Player : MonoBehaviour, IAttackable {
 			Player.instance.magic -= 1;
 			int damage = Random.Range (10, 20);
 			EventQueue.AddMessage ("you cast heal!");
-			IAttackable attackable = Target().GetComponent(typeof(IAttackable)) as IAttackable;
-
-			EventQueue.AddEvent (attackable, -damage, DamageTypes.Physical);
+			EventQueue.AddEvent (Target(), -damage, DamageTypes.Physical);
 			if(BattleController.inCombat) turnAvailable = false;
 		}
 	}
@@ -74,9 +71,7 @@ public class Player : MonoBehaviour, IAttackable {
 			SpeechBubble.mainBubble.Activate ();
 			int damage = Random.Range (10, 20);
 			EventQueue.AddMessage ("you cast fire!");
-			IAttackable attackable = Target().GetComponent(typeof(IAttackable)) as IAttackable;
-
-			EventQueue.AddEvent (attackable, damage, DamageTypes.Fire);
+			EventQueue.AddEvent (Target(), damage, DamageTypes.Fire);
 			if(BattleController.inCombat) turnAvailable = false;
 		}
 	}

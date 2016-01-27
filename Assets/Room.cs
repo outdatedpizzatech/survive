@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Room : MonoBehaviour {
 	public bool northDoor;
@@ -8,13 +9,15 @@ public class Room : MonoBehaviour {
 	public bool westDoor;
 	public string[] messages;
 	public ArrayList enemies;
+	public ArrayList entities;
 	public ArrayList fieldObjects;
 
 
 	// Use this for initialization
 	void Start () {
-		fieldObjects = new ArrayList ();
+		entities = new ArrayList ();
 		enemies = new ArrayList();
+		fieldObjects = new ArrayList();
 		float randomValue = Random.value;
 
 //		if (randomValue < .1f) {
@@ -29,7 +32,7 @@ public class Room : MonoBehaviour {
 
 		if (randomValue < .5f) {
 			AddEnemy ();
-//			AddEnemy ();
+			AddEnemy ();
 
 			foreach (GameObject enemy in enemies) {
 				enemy.transform.position = GameObject.Find("Bin").transform.position;
@@ -38,10 +41,9 @@ public class Room : MonoBehaviour {
 
 
 
-		if (randomValue < .8f) {
-			GameObject fieldObject = Instantiate (Resources.Load ("Bomb"), GameObject.Find("Bin").transform.position, Quaternion.identity) as GameObject;
-			fieldObject.GetComponent<Bomb> ().room = this;
-			fieldObjects.Add (fieldObject);
+		if (randomValue < 1f) {
+			AddBomb ();
+			AddBomb ();
 		}
 
 		randomValue = Random.value;
@@ -51,11 +53,18 @@ public class Room : MonoBehaviour {
 //		SpeechBubble.mainBubble.textToDisplay = messages;
 	}
 
+	void AddBomb(){
+		GameObject fieldObject = Instantiate (Resources.Load ("Bomb"), GameObject.Find("Bin").transform.position, Quaternion.identity) as GameObject;
+		fieldObject.GetComponent<Bomb> ().room = this;
+		entities.Add (fieldObject);
+		fieldObjects.Add (fieldObject);
+	}
+
 	void AddEnemy(){
 		GameObject enemyObject = Instantiate (Resources.Load ("Corgi"), Vector3.zero, Quaternion.identity) as GameObject;
 		enemyObject.GetComponent<Corgi> ().room = this;
 		enemies.Add (enemyObject);
-		fieldObjects.Add (enemyObject);
+		entities.Add (enemyObject);
 	}
 	
 	// Update is called once per frame
@@ -86,21 +95,34 @@ public class Room : MonoBehaviour {
 	}
 
 	public void EnterRoom(){
-		this.AddObject (Player.instance.gameObject);
+		int i = 0;
 		foreach (GameObject fieldObject in this.fieldObjects) {
-			if(fieldObject != Player.instance.gameObject) fieldObject.transform.position = new Vector3 (2, 0, 0);
+			i++;
+			fieldObject.transform.position = new Vector3 (1.1f * i, 1.1f * i, 0);
 		}
+		i = 0;
 		foreach (GameObject enemy in this.enemies) {
-			enemy.transform.position = Vector3.zero;
+			i++;
+			enemy.transform.position = new Vector3(-i, -i, 0);
 		}
-
-
 	}
 
 	public void ExitRoom(){
-		this.RemoveObject (Player.instance.gameObject);
-		foreach (GameObject fieldObject in this.fieldObjects) {
-			if(fieldObject != Player.instance.gameObject) fieldObject.transform.position = GameObject.Find("Bin").transform.position;
+		foreach (GameObject fieldObject in this.entities) {
+			fieldObject.transform.position = GameObject.Find("Bin").transform.position;
 		}
+	}
+
+	public List<GameObject> AllEntities(){
+		List<GameObject> list = new List<GameObject> ();
+
+		list.Add (Player.instance.gameObject);
+		foreach (GameObject enemy in enemies) {
+			list.Add (enemy);
+		}
+		foreach (GameObject fieldObject in fieldObjects) {
+			list.Add (fieldObject);
+		}
+		return(list);
 	}
 }
