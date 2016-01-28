@@ -5,6 +5,7 @@ public class Bomb : MonoBehaviour, IAttackable {
 
 	public int health = 1;
 	public Room room;
+	public GameObject spawnPoint;
 
 
 	// Use this for initialization

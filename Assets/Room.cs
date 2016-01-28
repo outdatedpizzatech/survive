@@ -32,16 +32,19 @@ public class Room : MonoBehaviour {
 		}
 
 		if (randomValue < 1f) {
-			AddBomb ();
-			AddBomb ();
+			foreach (GameObject spawnPoint in ItemSpawnPoint.spawnPoints) {
+				AddBomb (spawnPoint);
+			}
+
 		}
 
 		randomValue = Random.value;
 	}
 
-	void AddBomb(){
+	void AddBomb(GameObject spawnPoint){
 		GameObject fieldObject = Instantiate (Resources.Load ("Bomb"), GameObject.Find("Bin").transform.position, Quaternion.identity) as GameObject;
 		fieldObject.GetComponent<Bomb> ().room = this;
+		fieldObject.GetComponent<Bomb> ().spawnPoint = spawnPoint;
 //		fieldObject.transform.parent = transform.Find ("Entities");
 		entities.Add (fieldObject);
 		fieldObjects.Add (fieldObject);
@@ -87,11 +90,12 @@ public class Room : MonoBehaviour {
 	public void EnterRoom(){
 		int i = 0;
 		foreach (GameObject fieldObject in this.fieldObjects) {
-			float negFactor = 1;
-			if (i % 2 == 0) negFactor = -1;
-			float xPosition = Mathf.CeilToInt ((float)(i + 1) / 2) * negFactor * 1.5f;
-			fieldObject.transform.position = new Vector3 (xPosition, -1.75f, 0);
-			i++;
+//			float negFactor = 1;
+//			if (i % 2 == 0) negFactor = -1;
+//			float xPosition = Mathf.CeilToInt ((float)(i + 1) / 2) * negFactor * 1.5f;
+//			fieldObject.transform.position = new Vector3 (xPosition, -1.75f, 0);
+//			i++;
+			fieldObject.transform.position = fieldObject.GetComponent<Bomb>().spawnPoint.transform.position;
 		}
 
 		i = 0;
