@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class RoomController : MonoBehaviour {
 
@@ -39,7 +40,15 @@ public class RoomController : MonoBehaviour {
 
 				activeRoom = destination;
 				UIController.instance.Reset ();
+				UpdateNav (destination);
 			}
 		}
+	}
+
+	public static void UpdateNav(Room room){
+		GameObject.Find ("Navigation").transform.Find ("MoveUp").GetComponent<Image> ().enabled = room.northDoor;
+		GameObject.Find ("Navigation").transform.Find ("MoveLeft").GetComponent<Image> ().enabled = room.westDoor;
+		GameObject.Find ("Navigation").transform.Find ("MoveRight").GetComponent<Image> ().enabled = room.eastDoor;
+		GameObject.Find ("Navigation").transform.Find ("MoveDown").GetComponent<Image> ().enabled = room.southDoor;
 	}
 }

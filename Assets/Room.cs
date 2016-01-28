@@ -11,6 +11,9 @@ public class Room : MonoBehaviour {
 	public ArrayList enemies;
 	public ArrayList entities;
 	public ArrayList fieldObjects;
+	public Matrix matrix;
+	public int xCoordinate;
+	public int yCoordinate;
 
 
 	public void ShowEnemies(){
@@ -36,7 +39,7 @@ public class Room : MonoBehaviour {
 		fieldObjects = new ArrayList();
 		float randomValue = Random.value;
 
-		if (randomValue < .5f) {
+		if (randomValue < .01f) {
 			AddEnemy ();
 			AddEnemy ();
 			AddEnemy ();
@@ -51,6 +54,8 @@ public class Room : MonoBehaviour {
 		}
 
 		randomValue = Random.value;
+
+		UpdateNeighbors ();
 	}
 
 	void AddBomb(GameObject spawnPoint){
@@ -68,6 +73,29 @@ public class Room : MonoBehaviour {
 //		enemyObject.transform.parent = transform.Find ("Entities");
 		enemies.Add (enemyObject);
 		entities.Add (enemyObject);
+	}
+
+	void UpdateNeighbors(){
+		Room neighbor;
+		if (northDoor) {
+			neighbor = matrix.RoomAt (xCoordinate, yCoordinate + 1);
+			if (neighbor != null) neighbor.southDoor = true;
+		}
+
+		if (southDoor) {
+			neighbor = matrix.RoomAt (xCoordinate, yCoordinate - 1);
+			if (neighbor != null) neighbor.northDoor = true;
+		}
+
+		if (eastDoor) {
+			neighbor = matrix.RoomAt (xCoordinate + 1, yCoordinate);
+			if (neighbor != null) neighbor.westDoor = true;
+		}
+
+		if (westDoor) {
+			neighbor = matrix.RoomAt (xCoordinate - 1, yCoordinate);
+			if (neighbor != null) neighbor.eastDoor = true;
+		}
 	}
 	
 	// Update is called once per frame
