@@ -24,6 +24,7 @@ public class Room : MonoBehaviour {
 		if (randomValue < .5f) {
 			AddEnemy ();
 			AddEnemy ();
+			AddEnemy ();
 
 			foreach (GameObject enemy in enemies) {
 				enemy.transform.position = GameObject.Find("Bin").transform.position;
@@ -86,13 +87,27 @@ public class Room : MonoBehaviour {
 	public void EnterRoom(){
 		int i = 0;
 		foreach (GameObject fieldObject in this.fieldObjects) {
+			float negFactor = 1;
+			if (i % 2 == 0) negFactor = -1;
+			float xPosition = Mathf.CeilToInt ((float)(i + 1) / 2) * negFactor * 1.5f;
+			fieldObject.transform.position = new Vector3 (xPosition, -1.75f, 0);
 			i++;
-			fieldObject.transform.position = new Vector3 (1.1f * i, 1.1f * i, 0);
 		}
+
 		i = 0;
+
 		foreach (GameObject enemy in this.enemies) {
+			float negFactor = 1;
+			if (i % 2 == 0) negFactor = -1;
+			float xPosition;
+			if (this.enemies.Count % 2 == 0) {
+				xPosition = Mathf.CeilToInt ((float)(i + 1) / 2) * negFactor * 1.5f;
+			} else {
+				xPosition = Mathf.CeilToInt ((float)i / 2) * negFactor * 1.5f;
+				print ("using xPosition: " + xPosition);
+			}
+			enemy.transform.position = new Vector3(xPosition, -3, 0);
 			i++;
-			enemy.transform.position = new Vector3(-i, -i, 0);
 		}
 	}
 
