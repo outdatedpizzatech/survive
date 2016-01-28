@@ -46,11 +46,8 @@ public class Room : MonoBehaviour {
 			}
 		}
 
-		if (randomValue < 1f) {
-			foreach (GameObject spawnPoint in ItemSpawnPoint.spawnPoints) {
-				AddBomb (spawnPoint);
-			}
-
+		foreach (GameObject spawnPoint in ItemSpawnPoint.spawnPoints) {
+			if(Random.value < .1f) AddBomb (spawnPoint);
 		}
 
 		randomValue = Random.value;
@@ -132,6 +129,7 @@ public class Room : MonoBehaviour {
 
 	public void ExitRoom(){
 		ShowEnemies ();
+
 		foreach (GameObject fieldObject in this.entities) {
 			fieldObject.transform.position = GameObject.Find("Bin").transform.position;
 		}

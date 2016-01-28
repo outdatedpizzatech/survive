@@ -9,6 +9,7 @@ public class ItemSpawnPoint : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		spawnPoints.Add (gameObject);
+		transform.Find ("Body").GetComponent<SpriteRenderer> ().enabled = false;
 	}
 	
 	// Update is called once per frame
