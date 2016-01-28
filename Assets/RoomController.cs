@@ -4,6 +4,7 @@ using System.Collections;
 public class RoomController : MonoBehaviour {
 
 	public RoomController instance;
+	public static Room activeRoom;
 
 	// Use this for initialization
 	void Start () {
@@ -35,6 +36,9 @@ public class RoomController : MonoBehaviour {
 				if (destination.enemies.Count > 0) {
 					GameController.EnterEncounter (destination);
 				}
+
+				activeRoom = destination;
+				UIController.instance.Reset ();
 			}
 		}
 	}

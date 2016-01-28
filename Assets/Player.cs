@@ -47,6 +47,7 @@ public class Player : MonoBehaviour, IAttackable {
 
 	public void Attack(){
 		if (turnAvailable && !GameController.frozen) {
+			UIController.instance.Reset ();
 			SpeechBubble.mainBubble.Activate ();
 			int damage = Random.Range (1, 10);
 			EventQueue.AddMessage ("you attack!");
@@ -57,6 +58,7 @@ public class Player : MonoBehaviour, IAttackable {
 
 	public void Heal(){
 		if (turnAvailable && !GameController.frozen && Player.instance.magic > 0) {
+			UIController.instance.Reset ();
 			Player.instance.magic -= 1;
 			int damage = Random.Range (10, 20);
 			EventQueue.AddMessage ("you cast heal!");
@@ -67,6 +69,7 @@ public class Player : MonoBehaviour, IAttackable {
 
 	public void Fire(){
 		if (turnAvailable && !GameController.frozen && Player.instance.magic > 0) {
+			UIController.instance.Reset ();
 			Player.instance.magic -= 1;
 			SpeechBubble.mainBubble.Activate ();
 			int damage = Random.Range (10, 20);

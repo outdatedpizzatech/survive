@@ -13,6 +13,21 @@ public class Room : MonoBehaviour {
 	public ArrayList fieldObjects;
 
 
+	public void ShowEnemies(){
+		foreach (GameObject enemy in enemies) {
+			enemy.transform.Find ("Body").GetComponent<SpriteRenderer> ().color = new Color (1, 1, 1, 1);
+			enemy.GetComponent<BoxCollider2D> ().enabled = true;
+		}
+	}
+
+	public void HideEnemies(){
+		foreach (GameObject enemy in enemies) {
+			enemy.transform.Find ("Body").GetComponent<SpriteRenderer> ().color = new Color (1, 1, 1, .2f);
+			enemy.GetComponent<BoxCollider2D> ().enabled = false;
+		}
+	}
+
+
 	// Use this for initialization
 	void Start () {
 		gameObject.name = "Room " + Random.Range (0, 9999999).ToString ();
@@ -116,6 +131,7 @@ public class Room : MonoBehaviour {
 	}
 
 	public void ExitRoom(){
+		ShowEnemies ();
 		foreach (GameObject fieldObject in this.entities) {
 			fieldObject.transform.position = GameObject.Find("Bin").transform.position;
 		}

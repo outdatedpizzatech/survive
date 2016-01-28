@@ -5,6 +5,7 @@ public class UIController : MonoBehaviour {
 
 	Vector3 initialMapLocation;
 	bool mapVisible;
+	bool enemiesVisible;
 	public static UIController instance;
 
 	// Use this for initialization
@@ -18,6 +19,11 @@ public class UIController : MonoBehaviour {
 	
 	}
 
+	public void Reset(){
+		enemiesVisible = true;
+		RoomController.activeRoom.ShowEnemies ();
+	}
+
 	public void ToggleMap(){
 		if (mapVisible) {
 			GameObject.Find ("Map").transform.position = initialMapLocation;
@@ -25,6 +31,15 @@ public class UIController : MonoBehaviour {
 			GameObject.Find ("Map").transform.position = Vector3.zero;
 		}
 		mapVisible = !mapVisible;
+	}
+
+	public void ToggleEnemies(){
+		if (enemiesVisible) {
+			RoomController.activeRoom.HideEnemies ();
+		} else {
+			RoomController.activeRoom.ShowEnemies ();
+		}
+		enemiesVisible = !enemiesVisible;
 	}
 
 	public static void HideMap(){
